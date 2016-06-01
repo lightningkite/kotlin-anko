@@ -49,6 +49,7 @@ dependencies {
     compile 'org.jetbrains.anko:anko-recyclerview-v7:0.8.3'
     compile 'com.android.support:design:23.4.0'
     compile 'org.jetbrains.anko:anko-design:0.8.3'
+    compile project(path: ':kotlin-core')
 }
 
 buildscript {
