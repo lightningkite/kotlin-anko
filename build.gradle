@@ -49,9 +49,6 @@ dependencies {
     compile 'org.jetbrains.anko:anko-recyclerview-v7:0.8.3'
     compile 'com.android.support:design:23.4.0'
     compile 'org.jetbrains.anko:anko-design:0.8.3'
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.github.salomonbrys.kotson:kotson:2.1.0'
 }
 
 buildscript {
