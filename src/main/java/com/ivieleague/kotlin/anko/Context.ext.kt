@@ -1,6 +1,8 @@
 package com.ivieleague.kotlin.anko
 
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.ContextWrapper
 import org.jetbrains.anko.defaultSharedPreferences
@@ -28,4 +30,27 @@ fun Context.getUniquePreferenceId(): String {
     val made = UUID.randomUUID().toString()
     defaultSharedPreferences.edit().putString(key, made).apply()
     return made
+}
+
+inline fun Context.timePicker(start: Calendar, crossinline after: (Calendar) -> Unit) {
+    TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        start.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        start.set(Calendar.MINUTE, minute)
+        after(start)
+    }, start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE), false).show()
+}
+
+inline fun Context.datePicker(start: Calendar, crossinline after: (Calendar) -> Unit) {
+    DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                start.set(Calendar.YEAR, year)
+                start.set(Calendar.MONTH, monthOfYear)
+                start.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                after(start)
+            },
+            start.get(Calendar.YEAR),
+            start.get(Calendar.MONTH),
+            start.get(Calendar.DAY_OF_MONTH)
+    ).show()
 }

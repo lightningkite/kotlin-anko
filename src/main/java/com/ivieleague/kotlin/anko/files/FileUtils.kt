@@ -16,10 +16,6 @@ import java.io.File
  * Created by jivie on 8/14/15.
  */
 
-fun File.child(name: String): File {
-    return File(this, name)
-}
-
 fun File.toImageContentUri(context: Context): Uri? {
     val filePath = absolutePath;
     val cursor = context.contentResolver.query(
