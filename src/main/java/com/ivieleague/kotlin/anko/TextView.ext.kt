@@ -1,6 +1,7 @@
 package com.ivieleague.kotlin.anko
 
 import android.graphics.Typeface
+import android.text.Html
 import android.widget.TextView
 import java.util.*
 
@@ -55,3 +56,14 @@ inline fun TextView.topDrawable(resourceId: Int) {
 inline fun TextView.bottomDrawable(resourceId: Int) {
     setCompoundDrawablesWithIntrinsicBounds(null, null, null, resources.getDrawableCompat(resourceId))
 }
+
+
+var TextView.html: String get() = throw IllegalAccessException()
+    set(value) {
+        val newVal = value
+                .replace("<li>", "<p>&bull; ")
+                .replace("</li>", "</p>")
+                .replace("<ul>", "")
+                .replace("</ul>", "")
+        text = Html.fromHtml(newVal)
+    }

@@ -8,6 +8,7 @@ import android.support.v4.view.ViewCompat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import org.jetbrains.anko.inputMethodManager
 
 /**
  * Created by jivie on 3/28/16.
@@ -76,4 +77,9 @@ val View.visualBottom: Int get() {
 
 fun View.getActivity(): Activity? {
     return context.getActivity()
+}
+
+
+fun View.hideSoftInput() {
+    context.inputMethodManager.hideSoftInputFromWindow(this.applicationWindowToken, 0)
 }

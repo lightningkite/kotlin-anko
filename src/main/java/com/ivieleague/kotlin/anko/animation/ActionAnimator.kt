@@ -1,11 +1,9 @@
 package com.ivieleague.kotlin.anko.animation
 
 import android.animation.TimeInterpolator
-import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.view.animation.LinearInterpolator
-import com.ivieleague.kotlin.math.degreesTo
 import com.ivieleague.kotlin.runAll
 import java.lang.ref.WeakReference
 import java.util.*
@@ -33,7 +31,7 @@ class ActionAnimator<T, V>(
     private val handler: Handler = Handler(Looper.getMainLooper())
 
     private var endValue: V? = null
-    private var duration: Long = 0
+    private var duration: Long = 1
     private var delta: Long = 16
     private var timeElapsed: Long = 0
     private var shouldRun: Boolean = false
@@ -51,12 +49,10 @@ class ActionAnimator<T, V>(
             newDuration: Long,
             newDelta: Long = 16L
     ) {
-        stop()
         if (startValue == null) {
-            //jump
-            weak.get()?.action(to)
-            startValue = to
+            jump(to)
         } else {
+            stop()
             delta = newDelta
             duration = newDuration
             timeElapsed = 0
@@ -69,8 +65,10 @@ class ActionAnimator<T, V>(
     fun jump(
             to: V
     ) {
-        stop()
+        shouldRun = false
         startValue = to
+        endValue = to
+        timeElapsed = 0
         weak.get()?.action(to)
         onComplete.runAll()
     }
@@ -92,6 +90,7 @@ class ActionAnimator<T, V>(
             timeElapsed = Math.min(timeElapsed + delta, duration)
             val t = timeInterpolator.getInterpolation(timeElapsed.toFloat() / duration)
             val currentVal = interpolator(startValue!!, t, endValue!!)
+            if (currentVal == endValue) return
             weak.get()?.action(currentVal)
 
             if (timeElapsed < duration && weak.get() != null) {
@@ -103,60 +102,4 @@ class ActionAnimator<T, V>(
             }
         }
     }
-}
-
-/**
- * A function that interpolates between colors RGB style.
- */
-fun interpolateRGB(from: Int, interpolationValue: Float, to: Int): Int {
-    val a1 = Color.alpha(from)
-    val r1 = Color.red(from)
-    val g1 = Color.green(from)
-    val b1 = Color.blue(from)
-
-    val a2 = Color.alpha(to)
-    val r2 = Color.red(to)
-    val g2 = Color.green(to)
-    val b2 = Color.blue(to)
-
-    val inv = 1 - interpolationValue
-
-    return Color.argb(
-            (a2 * interpolationValue + a1 * inv).toInt(),
-            (r2 * interpolationValue + r1 * inv).toInt(),
-            (g2 * interpolationValue + g1 * inv).toInt(),
-            (b2 * interpolationValue + b1 * inv).toInt()
-    )
-}
-
-/**
- * A function that interpolates between colors HSV style.
- */
-fun interpolateHSV(from: Int, interpolationValue: Float, to: Int): Int {
-    val fromHSV: FloatArray = FloatArray(3)
-    Color.colorToHSV(from, fromHSV)
-    val toHSV: FloatArray = FloatArray(3)
-    Color.colorToHSV(to, toHSV)
-
-    val fromA = Color.alpha(from)
-    val toA = Color.alpha(to)
-
-    val diff = fromHSV[0].degreesTo(toHSV[0])
-
-    val inv = 1 - interpolationValue
-
-    val interpHSV: FloatArray = floatArrayOf(
-            (fromHSV[0] + diff * interpolationValue + 360) % 360,
-            fromHSV[1] * inv + toHSV[1] * interpolationValue,
-            fromHSV[2] * inv + toHSV[2] * interpolationValue
-    )
-
-    return Color.HSVToColor((toA * interpolationValue + fromA * inv).toInt(), interpHSV)
-}
-
-/**
- * A function that interpolates between two float values linearly.
- */
-fun interpolate(from: Float, interpolationValue: Float, to: Float): Float {
-    return from * (1 - interpolationValue) + to * interpolationValue
 }

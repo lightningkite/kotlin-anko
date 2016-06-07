@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.ContextWrapper
 import org.jetbrains.anko.defaultSharedPreferences
+import org.jetbrains.anko.inputMethodManager
 import java.util.*
 
 /**
@@ -53,4 +54,8 @@ inline fun Context.datePicker(start: Calendar, crossinline after: (Calendar) -> 
             start.get(Calendar.MONTH),
             start.get(Calendar.DAY_OF_MONTH)
     ).show()
+}
+
+fun Context.hideSoftInput() {
+    inputMethodManager.toggleSoftInput(0, 0)
 }
