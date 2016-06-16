@@ -17,6 +17,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            //Don't add proguard to library
         }
     }
 
