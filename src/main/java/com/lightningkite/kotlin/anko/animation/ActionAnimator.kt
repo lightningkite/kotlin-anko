@@ -49,6 +49,7 @@ class ActionAnimator<T, V>(
             newDuration: Long,
             newDelta: Long = 16L
     ) {
+        if (startValue == to) return
         if (startValue == null) {
             jump(to)
         } else {
@@ -90,11 +91,12 @@ class ActionAnimator<T, V>(
             timeElapsed = Math.min(timeElapsed + delta, duration)
             val t = timeInterpolator.getInterpolation(timeElapsed.toFloat() / duration)
             val currentVal = interpolator(startValue!!, t, endValue!!)
-            if (currentVal == endValue) return
-            weak.get()?.action(currentVal)
 
-            if (timeElapsed < duration && weak.get() != null) {
-                handler.postDelayed(this, delta)
+            if (timeElapsed < duration) {
+                weak.get()?.action(currentVal)
+                if (weak.get() != null) {
+                    handler.postDelayed(this, delta)
+                }
             } else {
                 startValue = endValue!!
                 weak.get()?.action(endValue!!)

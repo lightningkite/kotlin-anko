@@ -2,6 +2,7 @@ package com.lightningkite.kotlin.anko
 
 import android.content.Context
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewManager
 import android.widget.Button
@@ -19,6 +20,7 @@ class ProgressButton(context: Context) : _FrameLayout(context) {
 
     val button: Button = Button(context)
     val progress: ProgressBar = ProgressBar(context)
+    private var onDisabledClickLambda: () -> Unit = {}
 
     init {
         clipToPadding = false
@@ -60,6 +62,22 @@ class ProgressButton(context: Context) : _FrameLayout(context) {
 
     fun onClick(func: (View) -> Unit) {
         button.setOnClickListener(func)
+    }
+
+    fun onDisabledClick(func: () -> Unit) {
+        onDisabledClickLambda = func
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return !button.isEnabled
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return if (event.actionIndex == MotionEvent.ACTION_POINTER_DOWN || event.actionIndex == MotionEvent.ACTION_DOWN) {
+            onDisabledClickLambda()
+            true
+        } else false
+
     }
 }
 

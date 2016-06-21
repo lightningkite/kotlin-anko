@@ -41,6 +41,24 @@ inline fun <T : View> T.lparamsMod(width: Int, height: Int, weight: Float): T {
     return this
 }
 
+inline fun <T : View> T.lparamsMod(width: Int, height: Int, lambda: ViewGroup.MarginLayoutParams.() -> Unit): T {
+    layoutParams.apply {
+        if (this !is ViewGroup.MarginLayoutParams) throw IllegalArgumentException("This only works on ViewGroup.MarginLayoutParams")
+        this.width = width
+        this.height = height
+        lambda()
+    }
+    return this
+}
+
+inline fun <T : View> T.lparamsMod(lambda: ViewGroup.MarginLayoutParams.() -> Unit): T {
+    layoutParams.apply {
+        if (this !is ViewGroup.MarginLayoutParams) throw IllegalArgumentException("This only works on ViewGroup.MarginLayoutParams")
+        lambda()
+    }
+    return this
+}
+
 var View.elevationCompat: Float
     get() {
         runIfNewerThan(Build.VERSION_CODES.LOLLIPOP) {
