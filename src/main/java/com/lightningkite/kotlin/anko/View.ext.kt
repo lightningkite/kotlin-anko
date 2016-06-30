@@ -101,3 +101,27 @@ fun View.getActivity(): Activity? {
 fun View.hideSoftInput() {
     context.inputMethodManager.hideSoftInputFromWindow(this.applicationWindowToken, 0)
 }
+
+inline fun View.measureDesiredWidth(): Int {
+    this.measure(
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+            View.MeasureSpec.makeMeasureSpec((parent as ViewGroup).height, View.MeasureSpec.AT_MOST)
+    )
+    return measuredHeight
+}
+
+inline fun View.measureDesiredHeight(): Int {
+    this.measure(
+            View.MeasureSpec.makeMeasureSpec((parent as ViewGroup).width, View.MeasureSpec.AT_MOST),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+    )
+    return measuredHeight
+}
+
+inline fun View.isInLayoutCompat(): Boolean {
+    return runIfNewerThan(18, { isInLayout }, { false })
+}
+
+inline fun View.requestLayoutSafe() {
+    if (!isInLayoutCompat()) requestLayout()
+}

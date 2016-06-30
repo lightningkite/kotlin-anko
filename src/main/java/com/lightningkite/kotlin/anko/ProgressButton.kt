@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import org.jetbrains.anko._FrameLayout
 import org.jetbrains.anko.custom.ankoView
+import org.jetbrains.anko.dip
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textResource
 
@@ -72,12 +73,28 @@ class ProgressButton(context: Context) : _FrameLayout(context) {
         return !button.isEnabled
     }
 
+    var down = false
+    var startX = -1f
+    var startY = -1f
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return if (event.actionIndex == MotionEvent.ACTION_POINTER_DOWN || event.actionIndex == MotionEvent.ACTION_DOWN) {
-            onDisabledClickLambda()
-            true
-        } else false
-
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                down = true
+                startX = event.x
+                startY = event.y
+            }
+            MotionEvent.ACTION_UP -> {
+                down = false
+                if (Math.abs(startX - event.x) < dip(12) && Math.abs(startY - event.y) < dip(12)) {
+                    onDisabledClickLambda()
+                }
+            }
+        }
+//        return if (event.actionIndex == MotionEvent.ACTION) {
+//            onDisabledClickLambda()
+//            true
+//        } else false
+        return true
     }
 }
 
