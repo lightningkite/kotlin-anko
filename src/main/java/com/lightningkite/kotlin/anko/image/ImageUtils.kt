@@ -156,7 +156,7 @@ private fun lessResolution(context: Context, fileUri: Uri, minBytes: Long): Bitm
 
         // Calculate inSampleSize
         val size = context.contentResolver.fileSize(fileUri) ?: minBytes
-        options.inSampleSize = (size / minBytes).toInt()
+        options.inSampleSize = ImageUtils.calculateInSampleSize(size, minBytes)
 
         inputStream = context.contentResolver.openInputStream(fileUri)
         val returnValue = BitmapFactory.decodeStream(inputStream, null, options)
@@ -224,4 +224,14 @@ inline fun calculateInSampleSizeMax(options: BitmapFactory.Options, maxWidth: In
         inSampleSize = if (heightRatio > widthRatio) heightRatio else widthRatio
     }
     return inSampleSize
+}
+
+/**
+ * Created by jivie on 6/30/16.
+ */
+object ImageUtils {
+    fun calculateInSampleSize(length: Long, minBytes: Long): Int {
+        return Math.ceil(length.toDouble() / minBytes).toInt()
+    }
+
 }
