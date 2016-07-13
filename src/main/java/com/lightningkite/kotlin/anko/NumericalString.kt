@@ -37,9 +37,7 @@ object NumericalString {
 
     fun transformPosition(before: String, after: String, position: Int): Int {
         val numPos = NumericalString.numericalPosition(before, position)
-        println("numPos: $numPos")
         val charPos = NumericalString.charPosition(after, numPos)
-        println("charPos: $charPos")
         return charPos
     }
 
@@ -148,17 +146,6 @@ object NumericalString {
     }
 }
 
-fun main(vararg args: String): Unit {
-    val testUnformattedString = "1,300,055,5222"
-    val testString = "13,000,555,222"
-    val startSelection = 10 //end
-    val numPos = NumericalString.numericalPosition(testUnformattedString, startSelection)
-    println(numPos)
-    val charPos = NumericalString.charPosition(testString, numPos)
-    println(charPos)
-}
-
-
 fun EditText.autoComma(format: NumberFormat) {
     textChanger {
         val resultString = format.format(it.after.filter {
@@ -166,11 +153,6 @@ fun EditText.autoComma(format: NumberFormat) {
                     || it == NumericalString.decimalChar
                     || it == NumericalString.negativeChar
         }.toDoubleMaybe(0.0))
-        println(it)
-        println("start: ${it.beforeSelectionStart} -> ${it.afterSelectionStart}")
-        println("end: ${it.beforeSelectionEnd} -> ${it.afterSelectionEnd}")
-//                val startPos = NumericalString.transformPosition(it.after, resultString, it.afterSelectionStart)
-//                val endPos = NumericalString.transformPosition(it.after, resultString, it.afterSelectionEnd)
         val insertionPoint = NumericalString.transformPosition(it.after, resultString, it.insertionPoint + it.replacement.length).coerceIn(0, resultString.length)
         resultString to insertionPoint..insertionPoint
     }
