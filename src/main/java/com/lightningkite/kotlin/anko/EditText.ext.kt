@@ -89,6 +89,7 @@ fun EditText.textChanger(listener: (change: EditTextChangeData) -> Pair<String, 
             val (textResult, rangeResult) = listener(change)
             setText(textResult)
             setSelection(rangeResult.start, rangeResult.endInclusive)
+            ignore = false
         }
 
     })
