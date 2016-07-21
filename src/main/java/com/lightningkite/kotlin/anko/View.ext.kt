@@ -8,6 +8,8 @@ import android.support.v4.view.ViewCompat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.lightningkite.kotlin.lifecycle.LifecycleConnectable
+import com.lightningkite.kotlin.lifecycle.LifecycleListener
 import org.jetbrains.anko.inputMethodManager
 
 /**
@@ -125,3 +127,40 @@ inline fun View.isInLayoutCompat(): Boolean {
 inline fun View.requestLayoutSafe() {
     if (!isInLayoutCompat()) requestLayout()
 }
+
+/**
+ * Various extension functions to support bonds.
+ * Created by jivie on 7/22/15.
+ */
+
+object ViewLifecycleConnecter : LifecycleConnectable {
+
+    var view: View? = null
+
+    override fun connect(listener: LifecycleListener) {
+        if (view?.isAttachedToWindowCompat() ?: false) {
+            listener.onStart()
+        }
+        view?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View?) {
+                listener.onStart()
+            }
+
+            override fun onViewDetachedFromWindow(v: View?) {
+                listener.onStop()
+            }
+        })
+    }
+}
+
+
+/**
+ * Gets a lifecycle object for events to connect with.
+ * There is only one lifecycle object that is recycled, so the lifecycle returned expires when
+ * another lifecycle is requested.
+ */
+val View.lifecycle: LifecycleConnectable
+    get() {
+        ViewLifecycleConnecter.view = this
+        return ViewLifecycleConnecter
+    }
