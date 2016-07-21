@@ -15,12 +15,17 @@ import java.util.*
  */
 class TransitionView(context: Context) : _FrameLayout(context) {
     private val views: HashMap<String, View> = HashMap()
-    private var currentView: View = View(context)
+    private var currentView: View? = null
     var defaultAnimation: AnimationSet = AnimationSet.fade
 
     fun addView(tag: String, child: View) {
         super.addView(child)
         views.put(tag, child)
+        child.visibility = View.INVISIBLE
+    }
+
+    override fun addView(child: View) {
+        super.addView(child)
         child.visibility = View.INVISIBLE
     }
 
@@ -59,24 +64,28 @@ class TransitionView(context: Context) : _FrameLayout(context) {
      * @param set The animation set for animating.
      */
     fun animate(newView: View, set: AnimationSet = defaultAnimation) {
-        if (newView == currentView) return;
-        val animateIn = set.animateIn
-        val animateOut = set.animateOut
+        if (newView == currentView) return
         val oldView = currentView
+        if (oldView == null) {
+            jump(newView)
+        } else {
+            val animateIn = set.animateIn
+            val animateOut = set.animateOut
 
-        newView.visibility = View.VISIBLE
-        newView.animateIn(this).start()
-        oldView.animateOut(this).withEndAction {
-            oldView.visibility = View.INVISIBLE
-        }.start()
+            newView.visibility = View.VISIBLE
+            newView.animateIn(this).start()
+            oldView.animateOut(this).withEndAction {
+                oldView.visibility = View.INVISIBLE
+            }.start()
 
-        currentView = newView
+            currentView = newView
+        }
     }
 
     fun jump(view: View) {
-        currentView.visibility = View.INVISIBLE
+        currentView?.visibility = View.INVISIBLE
         currentView = view
-        currentView.visibility = View.VISIBLE
+        view.visibility = View.VISIBLE
     }
 
     fun jump(tag: String) = jump(views[tag] ?: throw IllegalArgumentException())

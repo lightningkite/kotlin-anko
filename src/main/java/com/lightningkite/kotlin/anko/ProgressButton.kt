@@ -2,12 +2,14 @@ package com.lightningkite.kotlin.anko
 
 import android.content.Context
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewManager
 import android.widget.Button
 import android.widget.ProgressBar
 import org.jetbrains.anko._FrameLayout
 import org.jetbrains.anko.custom.ankoView
+import org.jetbrains.anko.dip
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textResource
 
@@ -19,6 +21,7 @@ class ProgressButton(context: Context) : _FrameLayout(context) {
 
     val button: Button = Button(context)
     val progress: ProgressBar = ProgressBar(context)
+    private var onDisabledClickLambda: () -> Unit = {}
 
     init {
         clipToPadding = false
@@ -60,6 +63,38 @@ class ProgressButton(context: Context) : _FrameLayout(context) {
 
     fun onClick(func: (View) -> Unit) {
         button.setOnClickListener(func)
+    }
+
+    fun onDisabledClick(func: () -> Unit) {
+        onDisabledClickLambda = func
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return !button.isEnabled
+    }
+
+    var down = false
+    var startX = -1f
+    var startY = -1f
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                down = true
+                startX = event.x
+                startY = event.y
+            }
+            MotionEvent.ACTION_UP -> {
+                down = false
+                if (Math.abs(startX - event.x) < dip(12) && Math.abs(startY - event.y) < dip(12)) {
+                    onDisabledClickLambda()
+                }
+            }
+        }
+//        return if (event.actionIndex == MotionEvent.ACTION) {
+//            onDisabledClickLambda()
+//            true
+//        } else false
+        return true
     }
 }
 

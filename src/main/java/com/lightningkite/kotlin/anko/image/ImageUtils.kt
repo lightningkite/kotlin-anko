@@ -7,6 +7,7 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.util.Log
+import com.lightningkite.kotlin.anko.files.fileSize
 import com.lightningkite.kotlin.anko.files.getRealPath
 import java.io.File
 import java.io.FileOutputStream
@@ -35,9 +36,24 @@ fun Bitmap.rotate(degrees: Int): Bitmap {
 /**
  * Gets a bitmap from a Uri, scaling it down if necessary.
  */
-fun Context.getBitmapFromUri(inputUri: Uri, maxDimension: Int): Bitmap? {
-    val initialBitmap = lessResolution(this, inputUri, maxDimension, maxDimension) ?: return null
-    var bitmap: Bitmap = initialBitmap
+fun Context.getBitmapFromUri(inputUri: Uri, maxWidth: Int, maxHeight: Int): Bitmap? {
+    val initialBitmap = lessResolution(this, inputUri, maxWidth, maxHeight) ?: return null
+    return correctBitmapRotation(initialBitmap, inputUri)
+}
+
+/**
+ * Gets a bitmap from a Uri, scaling it down if necessary.
+ */
+fun Context.getBitmapFromUri(inputUri: Uri, minBytes: Long): Bitmap? {
+    val initialBitmap = lessResolution(this, inputUri, minBytes) ?: return null
+    return correctBitmapRotation(initialBitmap, inputUri)
+}
+
+/**
+ * Corrects the rotation of a bitmap based on the EXIF tags in the file as specified by the URI
+ */
+private fun Context.correctBitmapRotation(initialBitmap: Bitmap, inputUri: Uri): Bitmap {
+    var bitmap = initialBitmap
     try {
         val exif = ExifInterface(inputUri.getRealPath(this))
         val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1)
@@ -65,9 +81,9 @@ fun Context.getBitmapFromUri(inputUri: Uri, maxDimension: Int): Bitmap? {
     } catch (e: IllegalArgumentException) {
         e.printStackTrace()
     }
-
     return bitmap
 }
+
 
 /**
  * Saves a bitmap to a file with a certain compression level between 0 and 100.
@@ -110,6 +126,37 @@ private fun lessResolution(context: Context, fileUri: Uri, width: Int, height: I
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false
+
+        inputStream = context.contentResolver.openInputStream(fileUri)
+        val returnValue = BitmapFactory.decodeStream(inputStream, null, options)
+        inputStream!!.close()
+
+        return returnValue
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    } finally {
+        try {
+            if (inputStream != null) {
+                inputStream.close()
+            }
+        } catch (e: Exception) {
+            /*squish*/
+        }
+
+    }
+    return null
+}
+
+
+private fun lessResolution(context: Context, fileUri: Uri, minBytes: Long): Bitmap? {
+    var inputStream: InputStream? = null
+    try {
+        val options = BitmapFactory.Options()
+
+        // Calculate inSampleSize
+        val size = context.contentResolver.fileSize(fileUri) ?: minBytes
+        options.inSampleSize = ImageUtils.calculateInSampleSize(size, minBytes)
 
         inputStream = context.contentResolver.openInputStream(fileUri)
         val returnValue = BitmapFactory.decodeStream(inputStream, null, options)
@@ -177,4 +224,14 @@ inline fun calculateInSampleSizeMax(options: BitmapFactory.Options, maxWidth: In
         inSampleSize = if (heightRatio > widthRatio) heightRatio else widthRatio
     }
     return inSampleSize
+}
+
+/**
+ * Created by jivie on 6/30/16.
+ */
+object ImageUtils {
+    fun calculateInSampleSize(length: Long, minBytes: Long): Int {
+        return Math.ceil(length.toDouble() / minBytes).toInt()
+    }
+
 }
