@@ -5,6 +5,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.ContextWrapper
+import android.view.View
+import org.jetbrains.anko.AnkoContextImpl
 import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.inputMethodManager
 import java.util.*
@@ -58,4 +60,20 @@ inline fun Context.datePicker(start: Calendar, crossinline after: (Calendar) -> 
 
 fun Context.hideSoftInput() {
     inputMethodManager.toggleSoftInput(0, 0)
+}
+
+fun <T> Context.anko(owner: T, setup: AnkoContextImpl<T>.() -> Unit): View {
+    return AnkoContextImpl<T>(this, owner, false).apply(setup).view
+}
+
+fun Context.anko(setup: AnkoContextImpl<Context>.() -> Unit): View {
+    return AnkoContextImpl(this, this, false).apply(setup).view
+}
+
+fun <T> Context.anko(owner: T): AnkoContextImpl<T> {
+    return AnkoContextImpl<T>(this, owner, false)
+}
+
+fun Context.anko(): AnkoContextImpl<Context> {
+    return AnkoContextImpl(this, this, false)
 }
