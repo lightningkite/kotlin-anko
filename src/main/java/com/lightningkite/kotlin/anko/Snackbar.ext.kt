@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.support.design.widget.Snackbar
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import org.jetbrains.anko.findOptional
 
@@ -11,20 +12,28 @@ import org.jetbrains.anko.findOptional
  * Created by josep on 3/3/2016.
  */
 
-fun Snackbar.setTextColor(color: Int) {
-    (view.findViewById(android.support.design.R.id.snackbar_text) as? TextView)?.setTextColor(color)
+private fun View.setSubviewsTextColor(color: Int) {
+    if (this is ViewGroup) {
+        for (subviewIndex in 0..childCount) {
+            val subview = getChildAt(subviewIndex)
+            subview.setSubviewsTextColor(color)
+        }
+    }
+    if (this is TextView) {
+        this.setTextColor(color)
+    }
 }
 
 fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
     val snack = Snackbar.make(this, text, duration)
-    snack.setTextColor(Color.WHITE)
+    snack.view.setSubviewsTextColor(Color.WHITE)
     snack.init()
     snack.show()
 }
 
 fun View.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
     val snack = Snackbar.make(this, text, duration)
-    snack.setTextColor(Color.WHITE)
+    snack.view.setSubviewsTextColor(Color.WHITE)
     snack.init()
     snack.show()
 }
