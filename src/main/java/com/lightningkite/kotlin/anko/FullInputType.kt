@@ -9,4 +9,8 @@ object FullInputType {
 
     const val NAME: Int = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
     const val INTEGER: Int = InputType.TYPE_CLASS_NUMBER
+    const val PHONE: Int = InputType.TYPE_CLASS_PHONE
+    const val EMAIL: Int = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+    const val PASSWORD: Int = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+    const val SENTENCE: Int = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
 }
