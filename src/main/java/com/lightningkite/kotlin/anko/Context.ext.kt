@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
 import org.jetbrains.anko.AnkoContextImpl
-import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.inputMethodManager
 import java.util.*
 
@@ -28,10 +27,11 @@ fun Context.getActivity(): Activity? {
 
 fun Context.getUniquePreferenceId(): String {
     val key = "com.lightningkite.kotlincomponents.device.install_uuid"
-    val found: String? = defaultSharedPreferences.getString(key, null)
+    val sharedPreferences = getSharedPreferences("com.lightningkite.kotlin.anko", 0)
+    val found: String? = sharedPreferences.getString(key, null)
     if (found != null) return found
     val made = UUID.randomUUID().toString()
-    defaultSharedPreferences.edit().putString(key, made).apply()
+    sharedPreferences.edit().putString(key, made).apply()
     return made
 }
 
