@@ -3,6 +3,9 @@ package com.lightningkite.kotlin.anko
 import android.graphics.PorterDuff
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 
@@ -19,6 +22,36 @@ fun EditText.resetCursorColor() {
     } catch (ex: Exception) {
         ex.printStackTrace()
     }
+}
+
+fun EditText.onDone(action: (text: String) -> Unit) {
+    imeOptions = EditorInfo.IME_ACTION_DONE
+    setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        if ((event?.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            action(text.toString())
+            return@OnKeyListener true;
+        }
+        false
+    })
+    setOnEditorActionListener({ v, actionId, event ->
+        action(text.toString())
+        true;
+    })
+}
+
+fun EditText.onSend(action: (text: String) -> Unit) {
+    imeOptions = EditorInfo.IME_ACTION_SEND
+    setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        if ((event?.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            action(text.toString())
+            return@OnKeyListener true;
+        }
+        false
+    })
+    setOnEditorActionListener({ v, actionId, event ->
+        action(text.toString())
+        true;
+    })
 }
 
 fun EditText.setCursorColor(color: Int) {
