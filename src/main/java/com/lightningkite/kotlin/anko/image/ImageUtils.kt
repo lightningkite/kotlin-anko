@@ -198,13 +198,13 @@ fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeig
 
     if (height > reqHeight || width > reqWidth) {
         // Calculate ratios of height and width to requested height and width
-        val heightRatio = Math.round(height.toFloat() / reqHeight.toFloat())
-        val widthRatio = Math.round(width.toFloat() / reqWidth.toFloat())
+        val heightRatio = Math.ceil(height.toDouble() / reqHeight.toDouble()).toInt()
+        val widthRatio = Math.ceil(width.toDouble() / reqWidth.toDouble()).toInt()
 
         // Choose the smallest ratio as inSampleSize value, this will guarantee
-        // a final image with both dimensions larger than or equal to the
+        // a final image with both dimensions be just smaller than or equal to the
         // requested height and width.
-        inSampleSize = if (heightRatio < widthRatio) heightRatio else widthRatio
+        inSampleSize = if (heightRatio > widthRatio) heightRatio else widthRatio
     }
     return inSampleSize
 }
