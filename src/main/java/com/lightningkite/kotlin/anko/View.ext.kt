@@ -164,3 +164,17 @@ val View.lifecycle: LifecycleConnectable
         ViewLifecycleConnecter.view = this
         return ViewLifecycleConnecter
     }
+
+
+inline fun View.onClickWithCooldown(cooldown: Long = 1000L, crossinline action: () -> Unit) {
+    setOnClickListener(object : View.OnClickListener {
+        var lastTime = 0L
+        override fun onClick(v: View?) {
+            val now = System.currentTimeMillis()
+            if (now - lastTime > cooldown) {
+                action()
+                lastTime = now
+            }
+        }
+    })
+}
