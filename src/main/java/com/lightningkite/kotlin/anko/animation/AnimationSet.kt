@@ -78,5 +78,15 @@ interface AnimationSet {
                 animate().translationY(it.height.toFloat()).setDuration(300)
             }
         }
+        val flipVertical: AnimationSet = object : AnimationSet {
+            override val animateIn: View.(ViewGroup) -> ViewPropertyAnimator = {
+                scaleY = (0f)
+                animate().scaleY(1f).setDuration(150).setStartDelay(150)
+            }
+            override val animateOut: View.(ViewGroup) -> ViewPropertyAnimator = {
+                scaleY = (1f)
+                animate().scaleY(0f).setDuration(150)
+            }
+        }
     }
 }
