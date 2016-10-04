@@ -25,17 +25,25 @@ private fun View.setSubviewsTextColor(color: Int) {
 }
 
 fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
-    val snack = Snackbar.make(this, text, duration)
-    snack.view.setSubviewsTextColor(Color.WHITE)
-    snack.init()
-    snack.show()
+    try {
+        val snack = Snackbar.make(this, text, duration)
+        snack.view.setSubviewsTextColor(Color.WHITE)
+        snack.init()
+        snack.show()
+    } catch(e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 fun View.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
-    val snack = Snackbar.make(this, text, duration)
-    snack.view.setSubviewsTextColor(Color.WHITE)
-    snack.init()
-    snack.show()
+    try {
+        val snack = Snackbar.make(this, text, duration)
+        snack.view.setSubviewsTextColor(Color.WHITE)
+        snack.init()
+        snack.show()
+    } catch(e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 fun Snackbar.onDismissed(lambda: (event: Int) -> Unit) {
