@@ -6,11 +6,13 @@ import android.view.ViewGroup
 
 class ViewHeightAnimator(val target: View, val minHeight: Int = 0, val maxHeight: Int = Int.MAX_VALUE, val duration: Long = 50, val timeInterpolator: TimeInterpolator = ActionAnimator.defaultInterpolator) {
 
-    fun toggle() {
+    fun toggle(): Boolean {
         if(target.height == minHeight) {
             expand()
+            return true
         } else {
             contract()
+            return false
         }
     }
 
