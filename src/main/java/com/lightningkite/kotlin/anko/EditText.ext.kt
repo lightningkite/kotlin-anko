@@ -29,12 +29,14 @@ fun EditText.onDone(action: (text: String) -> Unit) {
     setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
         if ((event?.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
             action(text.toString())
-            return@OnKeyListener true;
+            hideSoftInput()
+            return@OnKeyListener true
         }
         false
     })
     setOnEditorActionListener({ v, actionId, event ->
         action(text.toString())
+        hideSoftInput()
         true;
     })
 }
