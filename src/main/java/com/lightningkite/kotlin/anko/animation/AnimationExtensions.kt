@@ -15,6 +15,7 @@ import org.jetbrains.anko.wrapContent
 /**
  * Creates a resizer function.
  */
+@Deprecated("These use the ActionAnimator, which is deprecated.")
 fun View.makeHeightAnimator(
         duration: Long,
         startSize: Float? = null,
@@ -51,6 +52,7 @@ fun View.makeHeightAnimator(
 /**
  * Creates a resizer function.
  */
+@Deprecated("These use the ActionAnimator, which is deprecated.")
 fun View.makeWidthAnimator(
         duration: Long,
         startSize: Float? = null,

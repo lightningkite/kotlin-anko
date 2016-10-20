@@ -4,6 +4,7 @@ import android.graphics.Color
 import com.lightningkite.kotlin.math.degreesTo
 
 /**
+ * Has various interpolation functions for different things, such as colors.
  * Created by jivie on 2/9/16.
  */
 object Interpolate {

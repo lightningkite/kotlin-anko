@@ -10,9 +10,9 @@ import android.os.Looper
 /**
  * This function does assume we have permission already.
  */
-fun LocationManager.requestSingleUpdate(
+inline fun LocationManager.requestSingleUpdate(
         criteria: Criteria = Criteria(),
-        onLocationHad: (Location) -> Unit
+        crossinline onLocationHad: (Location) -> Unit
 ) {
     requestSingleUpdate(criteria, object : LocationListener {
         override fun onLocationChanged(location: Location) {

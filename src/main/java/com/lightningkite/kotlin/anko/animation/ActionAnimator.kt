@@ -16,6 +16,7 @@ import java.util.*
  * @param interpolator A function that interpolates between one value and another.
  * Created by jivie on 9/28/15.
  */
+@Deprecated("Don't use this because it doesn't respond properly to the user's settings.  Try using TypedValueAnimator instead.")
 class ActionAnimator<T, V>(
         target: T,
         var startValue: V? = null,

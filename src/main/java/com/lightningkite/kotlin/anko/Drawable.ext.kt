@@ -9,7 +9,7 @@ import android.graphics.drawable.Drawable
 
 inline fun Drawable.setBoundsCentered(centerX: Float, centerY: Float) = setBoundsCentered(centerX.toInt(), centerY.toInt())
 
-inline fun Drawable.setBoundsCentered(centerX: Int, centerY: Int) {
+fun Drawable.setBoundsCentered(centerX: Int, centerY: Int) {
     val left = centerX - minimumWidth / 2
     val top = centerY - minimumHeight / 2
     setBounds(left, top, left + minimumWidth, top + minimumHeight)

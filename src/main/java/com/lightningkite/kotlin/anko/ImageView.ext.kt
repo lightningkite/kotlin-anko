@@ -16,7 +16,7 @@ import java.util.*
 
 val ImageView_previousBitmap: MutableMap<ImageView, Disposable> = HashMap()
 
-fun ImageView.imageUri(uri: Uri, minBytes: Long, brokenImageResource: Int? = null, onResult: (Disposable?) -> Unit) {
+fun ImageView.imageLocalUri(uri: Uri, minBytes: Long, brokenImageResource: Int? = null, onResult: (Disposable?) -> Unit) {
 //    imageStreamCustom(request, howToStream = {
 //        val holder = bitmapExif(context, minBytes)
 //        if (holder == null) null else holder.bitmap to holder
@@ -51,7 +51,7 @@ fun ImageView.imageUri(uri: Uri, minBytes: Long, brokenImageResource: Int? = nul
                     if (disposed) return else disposed = true
                     setImageDrawable(null)
                     it.recycle()
-                    ImageView_previousBitmap.remove(this@imageUri)
+                    ImageView_previousBitmap.remove(this@imageLocalUri)
                     removeOnAttachStateChangeListener(this)
                 }
             }
@@ -72,7 +72,7 @@ fun ImageView.imageUri(uri: Uri, minBytes: Long, brokenImageResource: Int? = nul
     })
 }
 
-fun ImageView.imageUri(uri: Uri, maxWidth: Int = 2048, maxHeight: Int = 2048, brokenImageResource: Int? = null, onResult: (Disposable?) -> Unit) {
+fun ImageView.imageLocalUri(uri: Uri, maxWidth: Int = 2048, maxHeight: Int = 2048, brokenImageResource: Int? = null, onResult: (Disposable?) -> Unit) {
 //    imageStreamCustom(request, howToStream = {
 //        val holder = bitmapExif(context, minBytes)
 //        if (holder == null) null else holder.bitmap to holder
@@ -107,7 +107,7 @@ fun ImageView.imageUri(uri: Uri, maxWidth: Int = 2048, maxHeight: Int = 2048, br
                     if (disposed) return else disposed = true
                     setImageDrawable(null)
                     it.recycle()
-                    ImageView_previousBitmap.remove(this@imageUri)
+                    ImageView_previousBitmap.remove(this@imageLocalUri)
                     removeOnAttachStateChangeListener(this)
                 }
             }

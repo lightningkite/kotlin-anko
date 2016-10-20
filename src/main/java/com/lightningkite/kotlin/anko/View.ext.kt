@@ -63,13 +63,13 @@ inline fun <T : View> T.lparamsMod(lambda: ViewGroup.MarginLayoutParams.() -> Un
 
 var View.elevationCompat: Float
     get() {
-        runIfNewerThan(Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return elevation
         }
         return 0f
     }
     set(value) {
-        runIfNewerThan(Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             elevation = value
         }
     }
@@ -121,11 +121,20 @@ inline fun View.measureDesiredHeight(): Int {
 }
 
 inline fun View.isInLayoutCompat(): Boolean {
-    return runIfNewerThan(18, { isInLayout }, { false })
+    return if (Build.VERSION.SDK_INT >= 18)
+        isInLayout
+    else
+        false
 }
 
 inline fun View.requestLayoutSafe() {
-    if (!isInLayoutCompat()) requestLayout()
+    if (Build.VERSION.SDK_INT >= 18) {
+        if (isInLayout) {
+            requestLayout()
+        }
+    } else {
+        requestLayout()
+    }
 }
 
 /**

@@ -5,6 +5,10 @@ import android.view.View
 
 /**
  * Created by joseph on 8/1/16.
+ *
+ * Can be used on forms to easily do validation.
+ *
+ * Make a collection of these and use the extension functions below.
  */
 class Validation(
         val view: View? = null,

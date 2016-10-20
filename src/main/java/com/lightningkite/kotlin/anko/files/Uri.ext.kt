@@ -5,6 +5,7 @@ import android.net.Uri
 import com.lightningkite.kotlin.stream.toByteArray
 
 /**
+ * Various functions to use on Uri's.
  * Created by jivie on 6/30/16.
  */
 
