@@ -129,7 +129,7 @@ inline fun View.isInLayoutCompat(): Boolean {
 
 inline fun View.requestLayoutSafe() {
     if (Build.VERSION.SDK_INT >= 18) {
-        if (isInLayout) {
+        if (!isInLayout) {
             requestLayout()
         }
     } else {
