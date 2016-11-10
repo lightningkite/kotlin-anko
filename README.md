@@ -17,6 +17,6 @@ Note that Anko is still based on Android views, so everything should still be co
 
 There are such a large number of functions, you're better off exploring the repository.  It's all designed to be easily read.  All of them, however, are Android specific.  Some of the really important points:
 
-`View.lifecycle` - This gives lifecycle capabilities to Android views.  Lifecycles are objects that allow listening to the creation and destruction of things.  These are really useful with the observable package we've created; however, to use all of our extensions for that you should look at including [kotlin-anko-observable](https://github.com/lightningkite/kotlin-anko-observable).
+`View.lifecycle` - This gives lifecycle capabilities to Android views.  Lifecycles are objects that allow listening to the creation and destruction of things.  These are really useful with the observable package we've created; the package that helps in using the two together is [kotlin-anko-observable](https://github.com/lightningkite/kotlin-anko-observable).  I highly recommend it.
 
 Async - This gives a way to tell the [kotlin-core](https://github.com/lightningkite/kotlin-core) package what the UI thread is and how to post something to it.  This is automatically enabled if also using [kotlin-anko-view-controllers](https://github.com/lightningkite/kotlin-anko-view-controllers), which I highly recommend.
