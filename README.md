@@ -1,6 +1,6 @@
 # kotlin-anko
 
-This repository is Android specific, and is *not* cross-platform.
+This repository is Android specific, and is *not* cross-platform.  For a good example of use, take a look at [kotlin-components-starter](https://github.com/UnknownJoe796/kotlin-components-starter).
 
 This repository contains a slew of things that we did not have from [Anko](https://github.com/Kotlin/anko).
 
