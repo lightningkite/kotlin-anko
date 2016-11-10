@@ -1,0 +1,32 @@
+# kotlin-anko
+
+This repository is Android specific, and is *not* cross-platform.
+
+This repository contains a slew of things that we did not have from [Anko](https://github.com/Kotlin/anko).
+
+## Overall Philosophy
+
+*Complete reuse:*  Everything that is commonly used should be included, preferably as an inline 
+extension function to reduce the app's method count.
+
+*Intuitiveness:*  Use inline extension functions to make common tasks simple, such as requesting a 
+photo from the user.  In standard Android, doing this properly would take at least a large file by 
+itself.  We have extension functions that do it in one line.
+
+
+## Anko
+
+This framework is based on Anko, a UI building library that uses Kotlin DSL instead of XML.  
+This allows your layout and associated code to be mixed, allowing greater cohesion in your apps.  
+While you should separate out business logic from display logic, now the display logic can actually  
+be where the layout is.
+
+Note that Anko is still based on Android views, so everything should still be compatible.
+
+## Overview
+
+There are such a large number of functions, you're better off exploring the repository.  It's all designed to be easily read.  All of them, however, are Android specific.  Some of the really important points:
+
+`View.lifecycle` - This gives lifecycle capabilities to Android views.  Lifecycles are objects that allow listening to the creation and destruction of things.  These are really useful with the observable package we've created; however, to use all of our extensions for that you should look at including [kotlin-anko-observable](https://github.com/lightningkite/kotlin-anko-observable).
+
+Async - This gives a way to tell the [kotlin-core](https://github.com/lightningkite/kotlin-core) package what the UI thread is and how to post something to it.  This is automatically enabled if also using [kotlin-anko-view-controllers](https://github.com/lightningkite/kotlin-anko-view-controllers), which I highly recommend.
