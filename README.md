@@ -4,16 +4,6 @@ This repository is Android specific, and is *not* cross-platform.
 
 This repository contains a slew of things that we did not have from [Anko](https://github.com/Kotlin/anko).
 
-## Overall Philosophy
-
-*Complete reuse:*  Everything that is commonly used should be included, preferably as an inline 
-extension function to reduce the app's method count.
-
-*Intuitiveness:*  Use inline extension functions to make common tasks simple, such as requesting a 
-photo from the user.  In standard Android, doing this properly would take at least a large file by 
-itself.  We have extension functions that do it in one line.
-
-
 ## Anko
 
 This framework is based on Anko, a UI building library that uses Kotlin DSL instead of XML.  
