@@ -231,7 +231,7 @@ inline fun calculateInSampleSizeMax(options: BitmapFactory.Options, maxWidth: In
  */
 object ImageUtils {
     fun calculateInSampleSize(length: Long, minBytes: Long): Int {
-        return Math.ceil(length.toDouble() / minBytes).toInt()
+        return Math.ceil(length.toDouble() / minBytes).toInt().coerceIn(1, Int.MAX_VALUE)
     }
 
 }
