@@ -3,8 +3,10 @@ package com.lightningkite.kotlin.anko
 import android.content.Context
 import android.graphics.Color
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.NestedScrollView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import android.widget.TextView
 import org.jetbrains.anko.findOptional
 
@@ -54,11 +56,33 @@ fun Snackbar.onDismissed(lambda: (event: Int) -> Unit) {
     })
 }
 
-fun Context.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {})
-        = getActivity()?.findOptional<View>(android.R.id.content)?.snackbar(text, duration, init)
+fun Context.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
+    var view = getActivity()?.findOptional<View>(android.R.id.content)
+    view = when (view) {
+        is ScrollView -> view.getChildAt(0)
+        is NestedScrollView -> view.getChildAt(0)
+        else -> view
+    }
+    try {
+        view?.snackbar(text, duration, init)
+    } catch(e: Exception) {
+        e.printStackTrace()
+    }
+}
 
-fun Context.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {})
-        = getActivity()?.findOptional<View>(android.R.id.content)?.snackbar(text, duration, init)
+fun Context.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
+    var view = getActivity()?.findOptional<View>(android.R.id.content)
+    view = when (view) {
+        is ScrollView -> view.getChildAt(0)
+        is NestedScrollView -> view.getChildAt(0)
+        else -> view
+    }
+    try {
+        view?.snackbar(text, duration, init)
+    } catch(e: Exception) {
+        e.printStackTrace()
+    }
+}
 
 fun android.support.design.widget.Snackbar.callback(init: _Snackbar_Callback.() -> Unit) {
     val callback = _Snackbar_Callback()
