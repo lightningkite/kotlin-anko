@@ -113,7 +113,7 @@ class TransitionView(context: Context) : _FrameLayout(context) {
 @Suppress("NOTHING_TO_INLINE") inline fun ViewManager.transitionView() = transitionView {}
 
 inline fun ViewManager.transitionView(init: TransitionView.() -> Unit): TransitionView {
-    return ankoView(::TransitionView, init)
+    return ankoView(::TransitionView, 0, init)
 }
 
 fun TransitionView.animateHeight() {

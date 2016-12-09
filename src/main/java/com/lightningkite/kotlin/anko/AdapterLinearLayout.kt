@@ -98,5 +98,5 @@ open class AdapterLinearLayout(context: Context, val stretchMode: Boolean) : Lin
 
 @Suppress("NOTHING_TO_INLINE") inline fun ViewManager.adapterLinearLayout() = adapterLinearLayout {}
 inline fun ViewManager.adapterLinearLayout(stretchMode: Boolean = false, init: AdapterLinearLayout.() -> Unit): AdapterLinearLayout {
-    return ankoView({ AdapterLinearLayout(it, stretchMode) }, init)
+    return ankoView({ AdapterLinearLayout(it, stretchMode) }, 0, init)
 }

@@ -362,5 +362,5 @@ class HorizontalListView(context: Context, attrs: AttributeSet? = null) : Adapte
 
 @Suppress("NOTHING_TO_INLINE") inline fun ViewManager.horizontalListView() = horizontalListView {}
 inline fun ViewManager.horizontalListView(init: HorizontalListView.() -> Unit): HorizontalListView {
-    return ankoView({ HorizontalListView(it, null) }, init)
+    return ankoView({ HorizontalListView(it, null) }, 0, init)
 }
