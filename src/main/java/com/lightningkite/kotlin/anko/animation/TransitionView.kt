@@ -30,10 +30,11 @@ class TransitionView(context: Context) : _FrameLayout(context) {
     private val views: HashMap<String, View> = HashMap()
     private var currentView: View? = null
     var defaultAnimation: AnimationSet = AnimationSet.fade
+    var animateOutToVisibilityState: Int = View.INVISIBLE
 
     override fun addView(child: View) {
         super.addView(child)
-        child.visibility = View.INVISIBLE
+        child.visibility = animateOutToVisibilityState
     }
 
     override fun generateDefaultLayoutParams(): LayoutParams? {
@@ -48,7 +49,7 @@ class TransitionView(context: Context) : _FrameLayout(context) {
      */
     fun <T : View> T.tag(myTag: String): T {
         views.put(myTag, this)
-        visibility = View.INVISIBLE
+        visibility = animateOutToVisibilityState
         return this
     }
 
@@ -78,7 +79,7 @@ class TransitionView(context: Context) : _FrameLayout(context) {
             newView.visibility = View.VISIBLE
             val newAnimation = newView.animateIn(this)
             val oldAnimation = oldView.animateOut(this).withEndAction {
-                oldView.visibility = View.INVISIBLE
+                oldView.visibility = animateOutToVisibilityState
             }
             onViewChange.runAll(AnimationInfo(
                     inView = newView,
@@ -95,7 +96,7 @@ class TransitionView(context: Context) : _FrameLayout(context) {
 
     fun jump(view: View) {
         val oldView = currentView
-        currentView?.visibility = View.INVISIBLE
+        currentView?.visibility = animateOutToVisibilityState
         currentView = view
         view.visibility = View.VISIBLE
         onViewChange.runAll(AnimationInfo(
