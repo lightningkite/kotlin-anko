@@ -47,7 +47,7 @@ class StickyHeadersItemDecorator<T : Any, K>(
     }
 
 
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
 
         if (list.isEmpty()) return
 
