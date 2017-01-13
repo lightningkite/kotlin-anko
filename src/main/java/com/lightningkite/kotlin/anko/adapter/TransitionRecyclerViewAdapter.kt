@@ -3,6 +3,7 @@ package com.lightningkite.kotlin.anko.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import java.util.*
 
 /**
  * An adapter for RecyclerViews that contains other adapters.
@@ -62,7 +63,19 @@ class TransitionRecyclerViewAdapter(
 
     override fun getItemCount(): Int = current?.itemCount ?: 0
 
-    override fun getItemViewType(position: Int): Int = current?.getItemViewType(position) ?: 0
+    val types = HashMap<Pair<RecyclerView.Adapter<*>, Int>, Int>()
+    val reverseTypes = HashMap<Int, Pair<RecyclerView.Adapter<*>, Int>>()
+    override fun getItemViewType(position: Int): Int {
+        val pair = current!! to current!!.getItemViewType(position)
+        return if (types.containsKey(pair)) {
+            types[pair]!!
+        } else {
+            val new = types.size
+            types.put(pair, new)
+            reverseTypes.put(new, pair)
+            new
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
             = current!!.onCreateViewHolder(parent, viewType)

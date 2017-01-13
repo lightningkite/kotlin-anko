@@ -73,9 +73,6 @@ class MultiRecyclerViewAdapter(
         super.unregisterAdapterDataObserver(observer)
     }
 
-    val types = HashMap<Pair<Int, Int>, Int>()
-    val reverseTypes = HashMap<Int, Pair<Int, Int>>()
-
     override fun getItemCount(): Int = adapters.sumBy { it.itemCount }
 
     fun getIndexInChild(position: Int): Int {
@@ -119,6 +116,9 @@ class MultiRecyclerViewAdapter(
         throw IllegalArgumentException()
     }
 
+
+    val types = HashMap<Pair<Int, Int>, Int>()
+    val reverseTypes = HashMap<Int, Pair<Int, Int>>()
     override fun getItemViewType(position: Int): Int {
         var beforePos = 0
         var afterPos = 0
