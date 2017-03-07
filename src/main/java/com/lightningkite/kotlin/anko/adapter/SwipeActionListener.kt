@@ -9,6 +9,7 @@ import com.lightningkite.kotlin.anko.alpha
 import com.lightningkite.kotlin.anko.setBoundsCentered
 
 /**
+ *
  * Created by jivie on 2/11/16.
  */
 open class SwipeActionListener(

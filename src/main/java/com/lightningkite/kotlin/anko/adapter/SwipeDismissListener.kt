@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 
 /**
+ *
  * Created by jivie on 2/11/16.
  */
 open class SwipeDismissListener(
