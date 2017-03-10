@@ -1,6 +1,7 @@
 package com.lightningkite.kotlin.anko
 
 import android.app.Activity
+import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
@@ -118,6 +119,14 @@ inline fun View.measureDesiredHeight(): Int {
             View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
     )
     return measuredHeight
+}
+
+inline fun View.measureDesiredSize(maxWidth: Int = Int.MAX_VALUE, maxHeight: Int = Int.MAX_VALUE): Point {
+    this.measure(
+            View.MeasureSpec.makeMeasureSpec(maxWidth, View.MeasureSpec.AT_MOST),
+            View.MeasureSpec.makeMeasureSpec(maxHeight, View.MeasureSpec.AT_MOST)
+    )
+    return Point(measuredWidth, measuredHeight)
 }
 
 inline fun View.isInLayoutCompat(): Boolean {
