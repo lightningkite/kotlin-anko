@@ -25,7 +25,7 @@ inline fun ViewManager.verticalRecyclerView(init: RecyclerView.() -> Unit) = ank
             this.orientation = LinearLayoutManager.VERTICAL
         }
     }
-}, init)
+}, 0, init)
 
 inline fun ViewManager.horizontalRecyclerView() = horizontalRecyclerView() {}
 inline fun ViewManager.horizontalRecyclerView(init: RecyclerView.() -> Unit) = ankoView({
@@ -35,7 +35,7 @@ inline fun ViewManager.horizontalRecyclerView(init: RecyclerView.() -> Unit) = a
             this.orientation = LinearLayoutManager.HORIZONTAL
         }
     }
-}, init)
+}, 0, init)
 
 inline fun ViewManager.verticalGridRecyclerView(spanCount: Int) = verticalGridRecyclerView(spanCount) {}
 inline fun ViewManager.verticalGridRecyclerView(spanCount: Int, init: RecyclerView.() -> Unit) = ankoView({
@@ -45,7 +45,7 @@ inline fun ViewManager.verticalGridRecyclerView(spanCount: Int, init: RecyclerVi
             this.orientation = GridLayoutManager.VERTICAL
         }
     }
-}, init)
+}, 0, init)
 
 inline fun ViewManager.horizontalGridRecyclerView(spanCount: Int) = horizontalGridRecyclerView(spanCount) {}
 inline fun ViewManager.horizontalGridRecyclerView(spanCount: Int, init: RecyclerView.() -> Unit) = ankoView({
@@ -55,7 +55,7 @@ inline fun ViewManager.horizontalGridRecyclerView(spanCount: Int, init: Recycler
             this.orientation = GridLayoutManager.HORIZONTAL
         }
     }
-}, init)
+}, 0, init)
 
 inline fun RecyclerView.horizontalDivider(drawable: Drawable, dividerSize: Int = drawable.intrinsicHeight.coerceAtLeast(1)) {
     addItemDecoration(object : RecyclerView.ItemDecoration() {

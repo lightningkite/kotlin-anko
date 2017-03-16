@@ -104,5 +104,5 @@ class HintSpinner(context: Context, mode: Int, val hint: View = TextView(context
 }
 
 inline fun ViewManager.hintSpinner(mode: Int, hint: View, init: HintSpinner.() -> Unit): HintSpinner {
-    return ankoView({ HintSpinner(it, mode, hint) }, init)
+    return ankoView({ HintSpinner(it, mode, hint) }, 0, init)
 }

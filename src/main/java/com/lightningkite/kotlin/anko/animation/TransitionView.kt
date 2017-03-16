@@ -4,6 +4,9 @@ import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.view.ViewManager
+import android.view.ViewPropertyAnimator
+import com.lightningkite.kotlin.anko.measureDesiredHeight
+import com.lightningkite.kotlin.runAll
 import org.jetbrains.anko._FrameLayout
 import org.jetbrains.anko.custom.ankoView
 import java.util.*
@@ -14,23 +17,24 @@ import java.util.*
  * Created by jivie on 8/26/15.
  */
 class TransitionView(context: Context) : _FrameLayout(context) {
+
+    class AnimationInfo(
+            val inView: View,
+            val inAnimator: ViewPropertyAnimator?,
+            val outView: View?,
+            val outAnimator: ViewPropertyAnimator?
+    )
+
+    val onViewChange = ArrayList<(AnimationInfo) -> Unit>()
+
     private val views: HashMap<String, View> = HashMap()
     private var currentView: View? = null
     var defaultAnimation: AnimationSet = AnimationSet.fade
-
-    fun addView(tag: String, child: View) {
-        super.addView(child)
-        views.put(tag, child)
-        child.visibility = View.INVISIBLE
-    }
+    var animateOutToVisibilityState: Int = View.INVISIBLE
 
     override fun addView(child: View) {
         super.addView(child)
-        child.visibility = View.INVISIBLE
-    }
-
-    fun removeView(tag: String) {
-        super.removeView(views.remove(tag))
+        child.visibility = animateOutToVisibilityState
     }
 
     override fun generateDefaultLayoutParams(): LayoutParams? {
@@ -45,7 +49,7 @@ class TransitionView(context: Context) : _FrameLayout(context) {
      */
     fun <T : View> T.tag(myTag: String): T {
         views.put(myTag, this)
-        visibility = View.INVISIBLE
+        visibility = animateOutToVisibilityState
         return this
     }
 
@@ -73,19 +77,34 @@ class TransitionView(context: Context) : _FrameLayout(context) {
             val animateOut = set.animateOut
 
             newView.visibility = View.VISIBLE
-            newView.animateIn(this).start()
-            oldView.animateOut(this).withEndAction {
-                oldView.visibility = View.INVISIBLE
-            }.start()
+            val newAnimation = newView.animateIn(this)
+            val oldAnimation = oldView.animateOut(this).withEndAction {
+                oldView.visibility = animateOutToVisibilityState
+            }
+            onViewChange.runAll(AnimationInfo(
+                    inView = newView,
+                    inAnimator = newAnimation,
+                    outView = oldView,
+                    outAnimator = oldAnimation
+            ))
+            oldAnimation.start()
+            newAnimation.start()
 
             currentView = newView
         }
     }
 
     fun jump(view: View) {
-        currentView?.visibility = View.INVISIBLE
+        val oldView = currentView
+        currentView?.visibility = animateOutToVisibilityState
         currentView = view
         view.visibility = View.VISIBLE
+        onViewChange.runAll(AnimationInfo(
+                inView = view,
+                inAnimator = null,
+                outView = oldView,
+                outAnimator = null
+        ))
     }
 
     fun jump(tag: String) = jump(views[tag] ?: throw IllegalArgumentException())
@@ -95,5 +114,15 @@ class TransitionView(context: Context) : _FrameLayout(context) {
 @Suppress("NOTHING_TO_INLINE") inline fun ViewManager.transitionView() = transitionView {}
 
 inline fun ViewManager.transitionView(init: TransitionView.() -> Unit): TransitionView {
-    return ankoView({ TransitionView(it) }, init)
+    return ankoView(::TransitionView, 0, init)
+}
+
+fun TransitionView.animateHeight() {
+    onViewChange += {
+        if (it.inAnimator != null) {
+            heightAnimator(it.inView.measureDesiredHeight()).setDuration(it.inAnimator.duration).start()
+        } else {
+            layoutParams.height = it.inView.measureDesiredHeight()
+        }
+    }
 }

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
 import org.jetbrains.anko.AnkoContextImpl
+import org.jetbrains.anko.connectivityManager
 import org.jetbrains.anko.inputMethodManager
 import java.util.*
 
@@ -77,3 +78,5 @@ fun <T> Context.anko(owner: T): AnkoContextImpl<T> {
 fun Context.anko(): AnkoContextImpl<Context> {
     return AnkoContextImpl(this, this, false)
 }
+
+inline fun Context.isNetworkAvailable(): Boolean = connectivityManager.activeNetworkInfo?.isConnected ?: false

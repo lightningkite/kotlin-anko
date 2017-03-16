@@ -20,4 +20,4 @@ var TextInputLayout.errorResource: Int
 
 inline fun TextInputLayout.textInputEditText(init: TextInputEditText.() -> Unit) = ankoView({
     TextInputEditText(it)
-}, init)
+}, 0, init)
