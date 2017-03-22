@@ -48,7 +48,15 @@ object NumericalString {
      * character * 10^2 is the value this particular character contributes.
      */
     fun numericalPosition(input: String, position: Int): NumericalPosition {
-        if (position >= input.length) return NumericalPosition(NumericalPosition.Status.End, 0)
+        if (position >= input.length) {
+            val decimalPosition = input.indexOfFirst { it == decimalChar }
+            return if (decimalPosition != -1) {
+                val postDecimalDigitCount = input.substring(decimalPosition).count(Char::isDigit)
+                return NumericalPosition(NumericalPosition.Status.Digit, postDecimalDigitCount - 1)
+            } else {
+                return NumericalPosition(NumericalPosition.Status.Decimal, 0)
+            }
+        }
         var currPos = 0
         var digitCount = 0
         var decimalBefore = Int.MAX_VALUE
@@ -128,13 +136,16 @@ object NumericalString {
                 return afterCharPos
             }
             NumericalPosition.Status.Decimal -> {
-                return input.indexOf(decimalChar, afterCharPos)
+                val pos = input.indexOf(decimalChar, afterCharPos)
+                return if (pos == -1) input.length else pos
             }
             NumericalPosition.Status.Negative -> {
-                return input.indexOf(negativeChar, afterCharPos)
+                val pos = input.indexOf(negativeChar, afterCharPos)
+                return if (pos == -1) input.indexOfFirst(Char::isDigit).coerceAtLeast(0) else pos
             }
             NumericalPosition.Status.SeparatorFollowing -> {
-                return input.indexOf(separatorChar, afterCharPos)
+                val pos = input.indexOf(separatorChar, afterCharPos)
+                return if (pos == -1) afterCharPos else pos
             }
             NumericalPosition.Status.Unknown -> {
                 return 0
