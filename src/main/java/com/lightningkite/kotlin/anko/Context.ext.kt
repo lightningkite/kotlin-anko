@@ -60,7 +60,15 @@ inline fun Context.datePicker(start: Calendar, crossinline after: (Calendar) -> 
 }
 
 fun Context.hideSoftInput() {
-    inputMethodManager.toggleSoftInput(0, 0)
+    val activity = this as Activity
+    val imm = activity.inputMethodManager
+    //Find the currently focused view, so we can grab the correct window token from it.
+    var view = activity.currentFocus
+    //If no view currently has focus, create a new one, just so we can grab a window token from it
+    if (view == null) {
+        view = View(activity)
+    }
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
 fun <T> Context.anko(owner: T, setup: AnkoContextImpl<T>.() -> Unit): View {
