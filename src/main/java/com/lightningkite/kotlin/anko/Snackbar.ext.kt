@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import org.jetbrains.anko.findOptional
 
 /**
@@ -32,7 +33,7 @@ private fun ForcePrivateSnackbarConstructor(group: ViewGroup): Snackbar {
 //    val constructor = Snackbar::class.java.getDeclaredConstructor(ViewGroup::class.java)
 //    constructor.isAccessible = true
 //    return constructor.newInstance(group)
-    return Snackbar.make(group, "", Snackbar.LENGTH_SHORT)
+    return Snackbar.make(group, "", Toast.LENGTH_LONG)
 }
 
 fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
