@@ -29,9 +29,10 @@ private fun View.setSubviewsTextColor(color: Int) {
 }
 
 private fun ForcePrivateSnackbarConstructor(group: ViewGroup): Snackbar {
-    val constructor = Snackbar::class.java.getDeclaredConstructor(ViewGroup::class.java)
-    constructor.isAccessible = true
-    return constructor.newInstance(group)
+//    val constructor = Snackbar::class.java.getDeclaredConstructor(ViewGroup::class.java)
+//    constructor.isAccessible = true
+//    return constructor.newInstance(group)
+    return Snackbar.make(group, "", Snackbar.LENGTH_SHORT)
 }
 
 fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
