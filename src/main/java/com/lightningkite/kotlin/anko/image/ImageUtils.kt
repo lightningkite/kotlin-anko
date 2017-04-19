@@ -55,7 +55,7 @@ fun Context.getBitmapFromUri(inputUri: Uri, minBytes: Long): Bitmap? {
 private fun Context.correctBitmapRotation(initialBitmap: Bitmap, inputUri: Uri): Bitmap {
     var bitmap = initialBitmap
     try {
-        val exif = ExifInterface(inputUri.getRealPath(this))
+        val exif = ExifInterface(if (inputUri.scheme == "file") inputUri.path else inputUri.getRealPath(this))
         val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1)
         when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> {
