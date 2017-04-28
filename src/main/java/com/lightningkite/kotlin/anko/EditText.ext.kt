@@ -68,8 +68,8 @@ fun EditText.setCursorColor(color: Int) {
         val fCursorDrawable = clazz.getDeclaredField("mCursorDrawable");
         fCursorDrawable.isAccessible = true;
         val drawables = arrayOf(
-                context.resources.getDrawableCompat(mCursorDrawableRes).apply { setColorFilter(color, PorterDuff.Mode.SRC_IN) },
-                context.resources.getDrawableCompat(mCursorDrawableRes).apply { setColorFilter(color, PorterDuff.Mode.SRC_IN) }
+                context.resources.getDrawableCompat(mCursorDrawableRes).mutate().apply { setColorFilter(color, PorterDuff.Mode.SRC_IN) },
+                context.resources.getDrawableCompat(mCursorDrawableRes).mutate().apply { setColorFilter(color, PorterDuff.Mode.SRC_IN) }
         )
         fCursorDrawable.set(editor, drawables);
     } catch (ignored: Throwable) {
