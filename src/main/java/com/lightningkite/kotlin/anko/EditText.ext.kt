@@ -16,9 +16,9 @@ import android.widget.TextView
 
 fun EditText.resetCursorColor() {
     try {
-        val f = TextView::class.java.getDeclaredField("mCursorDrawableRes");
-        f.isAccessible = true;
-        f.set(this, 0);
+        val f = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+        f.isAccessible = true
+        f.set(this, 0)
     } catch (ex: Exception) {
         ex.printStackTrace()
     }
@@ -37,7 +37,7 @@ fun EditText.onDone(action: (text: String) -> Unit) {
     setOnEditorActionListener({ v, actionId, event ->
         action(text.toString())
         hideSoftInput()
-        true;
+        true
     })
 }
 
@@ -46,32 +46,32 @@ fun EditText.onSend(action: (text: String) -> Unit) {
     setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
         if ((event?.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
             action(text.toString())
-            return@OnKeyListener true;
+            return@OnKeyListener true
         }
         false
     })
     setOnEditorActionListener({ v, actionId, event ->
         action(text.toString())
-        true;
+        true
     })
 }
 
 fun EditText.setCursorColor(color: Int) {
     try {
-        val fCursorDrawableRes = TextView::class.java.getDeclaredField("mCursorDrawableRes");
-        fCursorDrawableRes.setAccessible(true);
-        val mCursorDrawableRes = fCursorDrawableRes.getInt(this);
-        val fEditor = TextView::class.java.getDeclaredField("mEditor");
-        fEditor.isAccessible = true;
-        val editor = fEditor.get(this);
-        val clazz = editor.javaClass;
-        val fCursorDrawable = clazz.getDeclaredField("mCursorDrawable");
-        fCursorDrawable.isAccessible = true;
+        val fCursorDrawableRes = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+        fCursorDrawableRes.setAccessible(true)
+        val mCursorDrawableRes = fCursorDrawableRes.getInt(this)
+        val fEditor = TextView::class.java.getDeclaredField("mEditor")
+        fEditor.isAccessible = true
+        val editor = fEditor.get(this)
+        val clazz = editor.javaClass
+        val fCursorDrawable = clazz.getDeclaredField("mCursorDrawable")
+        fCursorDrawable.isAccessible = true
         val drawables = arrayOf(
                 context.resources.getDrawableCompat(mCursorDrawableRes).mutate().apply { setColorFilter(color, PorterDuff.Mode.SRC_IN) },
                 context.resources.getDrawableCompat(mCursorDrawableRes).mutate().apply { setColorFilter(color, PorterDuff.Mode.SRC_IN) }
         )
-        fCursorDrawable.set(editor, drawables);
+        fCursorDrawable.set(editor, drawables)
     } catch (ignored: Throwable) {
     }
 }
