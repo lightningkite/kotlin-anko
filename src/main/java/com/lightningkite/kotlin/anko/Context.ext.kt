@@ -60,7 +60,7 @@ inline fun Context.datePicker(start: Calendar, crossinline after: (Calendar) -> 
 }
 
 fun Context.hideSoftInput() {
-    val activity = this as Activity
+    val activity = this.getActivity() ?: return
     val imm = activity.inputMethodManager
     //Find the currently focused view, so we can grab the correct window token from it.
     var view = activity.currentFocus

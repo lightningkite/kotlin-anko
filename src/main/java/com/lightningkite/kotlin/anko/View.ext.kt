@@ -78,20 +78,14 @@ var View.elevationCompat: Float
 val View.visualTop: Int get() {
     val layoutParams = layoutParams
     return top - (
-            if (layoutParams is ViewGroup.MarginLayoutParams)
-                layoutParams.topMargin
-            else
-                0
+            (layoutParams as? ViewGroup.MarginLayoutParams)?.topMargin ?: 0
             ) + (translationY + .5f).toInt()
 };
 
 val View.visualBottom: Int get() {
     val layoutParams = layoutParams
     return bottom + (
-            if (layoutParams is ViewGroup.MarginLayoutParams)
-                layoutParams.bottomMargin
-            else
-                0
+            (layoutParams as? ViewGroup.MarginLayoutParams)?.bottomMargin ?: 0
             ) + (translationY + .5f).toInt()
 };
 
@@ -100,6 +94,10 @@ fun View.getActivity(): Activity? {
     return context.getActivity()
 }
 
+
+fun View.showSoftInput() {
+    context.inputMethodManager.showSoftInput(this, 0)
+}
 
 fun View.hideSoftInput() {
     context.inputMethodManager.hideSoftInputFromWindow(this.applicationWindowToken, 0)
