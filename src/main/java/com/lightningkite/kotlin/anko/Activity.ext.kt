@@ -1,6 +1,6 @@
 package com.lightningkite.kotlin.anko
 
-import android.app.Activity
+import android.content.Context
 import org.jetbrains.anko.AlertDialogBuilder
 import org.jetbrains.anko.selector
 
@@ -8,7 +8,7 @@ import org.jetbrains.anko.selector
  * Various extension functions for activities.
  * Created by jivie on 4/12/16.
  */
-inline fun Activity.selector(title: CharSequence?, pairs: List<Pair<CharSequence, () -> Unit>>) {
+inline fun Context.selector(title: CharSequence?, pairs: List<Pair<CharSequence, () -> Unit>>) {
     selector(title, pairs.map { it.first }) {
         if (it >= 0) {
             pairs[it].second()
@@ -16,7 +16,7 @@ inline fun Activity.selector(title: CharSequence?, pairs: List<Pair<CharSequence
     }
 }
 
-inline fun Activity.selector(title: CharSequence?, vararg pairs: Pair<CharSequence, () -> Unit>) {
+inline fun Context.selector(title: CharSequence?, vararg pairs: Pair<CharSequence, () -> Unit>) {
     selector(title, pairs.map { it.first }) {
         if (it >= 0) {
             pairs[it].second()
@@ -24,7 +24,7 @@ inline fun Activity.selector(title: CharSequence?, vararg pairs: Pair<CharSequen
     }
 }
 
-inline fun Activity.selector(title: Int?, pairs: List<Pair<Int, () -> Unit>>) {
+inline fun Context.selector(title: Int?, pairs: List<Pair<Int, () -> Unit>>) {
     val titleString = if (title == null) null else resources.getString(title)
     selector(titleString, pairs.map { resources.getString(it.first) }) {
         if (it >= 0) {
@@ -33,7 +33,7 @@ inline fun Activity.selector(title: Int?, pairs: List<Pair<Int, () -> Unit>>) {
     }
 }
 
-inline fun Activity.selector(title: Int?, vararg pairs: Pair<Int, () -> Unit>) {
+inline fun Context.selector(title: Int?, vararg pairs: Pair<Int, () -> Unit>) {
     val titleString = if (title == null) null else resources.getString(title)
     selector(titleString, pairs.map { resources.getString(it.first) }) {
         if (it >= 0) {
@@ -42,7 +42,7 @@ inline fun Activity.selector(title: Int?, vararg pairs: Pair<Int, () -> Unit>) {
     }
 }
 
-inline fun Activity.selector(title: Int?, vararg pairs: Pair<Int, () -> Unit>, crossinline onCancel: () -> Unit) {
+inline fun Context.selector(title: Int?, vararg pairs: Pair<Int, () -> Unit>, crossinline onCancel: () -> Unit) {
     with(AlertDialogBuilder(this)) {
         if (title != null) title(title)
         items(pairs.map { resources.getString(it.first) }) {
