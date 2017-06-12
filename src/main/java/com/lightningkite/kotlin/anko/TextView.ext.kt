@@ -1,6 +1,7 @@
 package com.lightningkite.kotlin.anko
 
 import android.graphics.Typeface
+import android.support.design.widget.TextInputLayout
 import android.text.Html
 import android.widget.TextView
 import java.util.*
@@ -34,11 +35,10 @@ var TextView.hintTextColorsResource: Int
 
 val fontCache: HashMap<String, Typeface> = HashMap()
 fun TextView.setFont(fileName: String) {
-    typeface = fontCache[fileName] ?: {
-        val font = Typeface.createFromAsset(context.assets, fileName)
-        fontCache[fileName] = font
-        font
-    }()
+    typeface = fontCache.getOrPut(fileName){Typeface.createFromAsset(context.assets, fileName) }
+}
+fun TextInputLayout.setFont(fileName: String) {
+    setTypeface(fontCache.getOrPut(fileName){Typeface.createFromAsset(context.assets, fileName) } )
 }
 
 inline fun TextView.leftDrawable(resourceId: Int) {
