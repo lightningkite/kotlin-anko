@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import com.lightningkite.kotlin.lifecycle.LifecycleConnectable
 import com.lightningkite.kotlin.lifecycle.LifecycleListener
 import org.jetbrains.anko.inputMethodManager
+import java.util.*
 
 /**
  * Created by jivie on 3/28/16.
@@ -144,44 +145,6 @@ inline fun View.requestLayoutSafe() {
     }
 }
 
-/**
- * Various extension functions to support bonds.
- * Created by jivie on 7/22/15.
- */
-
-object ViewLifecycleConnecter : LifecycleConnectable {
-
-    var view: View? = null
-
-    override fun connect(listener: LifecycleListener) {
-        if (view?.isAttachedToWindowCompat() ?: false) {
-            listener.onStart()
-        }
-        view?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-            override fun onViewAttachedToWindow(v: View?) {
-                listener.onStart()
-            }
-
-            override fun onViewDetachedFromWindow(v: View?) {
-                listener.onStop()
-            }
-        })
-    }
-}
-
-
-/**
- * Gets a lifecycle object for events to connect with.
- * There is only one lifecycle object that is recycled, so the lifecycle returned expires when
- * another lifecycle is requested.
- */
-val View.lifecycle: LifecycleConnectable
-    get() {
-        ViewLifecycleConnecter.view = this
-        return ViewLifecycleConnecter
-    }
-
-
 inline fun View.onClickWithCooldown(cooldown: Long = 1000L, crossinline action: () -> Unit) {
     setOnClickListener(object : View.OnClickListener {
         var lastTime = 0L
@@ -194,3 +157,76 @@ inline fun View.onClickWithCooldown(cooldown: Long = 1000L, crossinline action: 
         }
     })
 }
+
+
+//View lifecycle stuff
+
+private val View_lifecycleListener = WeakHashMap<View, ViewLifecycleListener>()
+
+class ViewLifecycleListener(val view: View) : View.OnAttachStateChangeListener, LifecycleConnectable {
+
+    var attached = view.isAttachedToWindowCompat()
+        private set
+    private val lifecycleListeners = ArrayList<LifecycleListener>()
+
+    override fun onViewDetachedFromWindow(v: View?) {
+        if (!attached) {
+            println("Broken cycling detected in onViewDetachedFromWindow $view")
+            return
+        }
+        lifecycleListeners.forEach { it.onStop() }
+        attached = false
+    }
+
+    override fun onViewAttachedToWindow(v: View?) {
+        if (attached) {
+            println("Broken cycling detected in onViewAttachedToWindow $view")
+            return
+        }
+        lifecycleListeners.forEach { it.onStart() }
+        attached = true
+    }
+
+    override fun connect(listener: LifecycleListener) {
+        if (attached) {
+            listener.onStart()
+        }
+        lifecycleListeners.add(listener)
+    }
+
+    fun setAlwaysOn() {
+        view.removeOnAttachStateChangeListener(this)
+        if (!attached) {
+            attached = true
+            lifecycleListeners.forEach { it.onStart() }
+        }
+    }
+
+    fun setAlwaysOnRecursive() {
+        setAlwaysOn()
+        view.forThisAndAllChildrenRecursive {
+            View_lifecycleListener[it]?.setAlwaysOn()
+        }
+    }
+}
+
+fun View.forThisAndAllChildrenRecursive(action: (View) -> Unit) {
+    action.invoke(this)
+    if (this is ViewGroup) {
+        for (i in 0..this.childCount - 1) {
+            forThisAndAllChildrenRecursive(action)
+        }
+    }
+}
+
+/**
+ * Gets a lifecycle object for events to connect with.
+ * There is only one lifecycle object that is recycled, so the lifecycle returned expires when
+ * another lifecycle is requested.
+ */
+val View.lifecycle: ViewLifecycleListener
+    get() = View_lifecycleListener.getOrPut(this) {
+        val listener = ViewLifecycleListener(this)
+        addOnAttachStateChangeListener(listener)
+        listener
+    }
