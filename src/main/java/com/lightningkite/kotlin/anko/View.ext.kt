@@ -214,7 +214,7 @@ fun View.forThisAndAllChildrenRecursive(action: (View) -> Unit) {
     action.invoke(this)
     if (this is ViewGroup) {
         for (i in 0..this.childCount - 1) {
-            forThisAndAllChildrenRecursive(action)
+            getChildAt(i).forThisAndAllChildrenRecursive(action)
         }
     }
 }
