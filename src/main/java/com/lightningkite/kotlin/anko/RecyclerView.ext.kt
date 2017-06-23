@@ -57,12 +57,12 @@ inline fun ViewManager.horizontalGridRecyclerView(spanCount: Int, init: Recycler
     }
 }, 0, init)
 
-inline fun RecyclerView.horizontalDivider(drawable: Drawable, dividerSize: Int = drawable.intrinsicHeight.coerceAtLeast(1)) {
+inline fun RecyclerView.horizontalDivider(drawable: Drawable, dividerSize: Int = drawable.intrinsicHeight.coerceAtLeast(1), padding: Int = 0) {
     addItemDecoration(object : RecyclerView.ItemDecoration() {
 
         override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-            val left = parent.paddingLeft;
-            val right = parent.width - parent.paddingRight;
+            val left = parent.paddingLeft + padding;
+            val right = parent.width - parent.paddingRight - padding;
 
             val childCount = parent.childCount;
             for (i in 0..childCount - 1) {
