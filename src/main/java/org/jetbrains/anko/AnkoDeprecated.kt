@@ -11,9 +11,6 @@ var View.enabled: Boolean get() = isEnabled
         isEnabled = value
     }
 
-@Deprecated("This has been deprecated in favor of calling the function directly.", replaceWith = ReplaceWith("setOnClickListener(action)"))
-inline fun View.onClick(crossinline action: () -> Unit) = setOnClickListener({ action() })
-
 @Deprecated("This has been deprecated in favor of calling the function directly.", ReplaceWith("addOnLayoutChangeListener(l)"))
 fun android.view.View.onLayoutChange(l: (v: android.view.View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) -> Unit) {
     addOnLayoutChangeListener(l)
