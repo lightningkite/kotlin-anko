@@ -4,7 +4,7 @@ import re
 rootdir = os.path.dirname(os.path.abspath(__file__))
 
 kt_replacements = [
-    (re.compile(r'\.selector\(([^\)]+)\) *{ *\n'), r'.selector(\1){ dialog, it -> ')
+    #(re.compile(r'\.selector\(([^\)]+)\) *{ *\n'), r'.selector(\1){ dialog, it -> ')
 ]
 kt_plain_replacements = [
 	("@onClick", "@setOnClickListener")
