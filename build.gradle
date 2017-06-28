@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    ext.ankoVersion = '0.10.1'
+    ext.ankoVersion = '0.10.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.anko:anko-sdk15:$ankoVersion"
