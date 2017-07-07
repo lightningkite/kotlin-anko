@@ -32,3 +32,21 @@ inline fun Int.colorMultiply(value: Float): Int {
             (Color.blue(this) * value).toInt().coerceIn(0, 255)
     )
 }
+
+inline fun Int.colorAdd(value: Double): Int {
+    return Color.argb(
+            Color.alpha(this),
+            (Color.red(this) + (value * 0xFF).toInt()).coerceIn(0, 255),
+            (Color.green(this) + (value * 0xFF).toInt()).coerceIn(0, 255),
+            (Color.blue(this) + (value * 0xFF).toInt()).coerceIn(0, 255)
+    )
+}
+
+inline fun Int.colorAdd(value: Float): Int {
+    return Color.argb(
+            Color.alpha(this),
+            (Color.red(this) + (value * 0xFF).toInt()).coerceIn(0, 255),
+            (Color.green(this) + (value * 0xFF).toInt()).coerceIn(0, 255),
+            (Color.blue(this) + (value * 0xFF).toInt()).coerceIn(0, 255)
+    )
+}
