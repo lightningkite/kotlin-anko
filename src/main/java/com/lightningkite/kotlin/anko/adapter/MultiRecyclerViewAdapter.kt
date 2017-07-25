@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.ViewGroup
-import com.lightningkite.kotlin.runAll
+import com.lightningkite.kotlin.invokeAll
 import java.util.*
 
 /**
@@ -67,7 +67,7 @@ class MultiRecyclerViewAdapter(
     override fun unregisterAdapterDataObserver(observer: RecyclerView.AdapterDataObserver) {
         timesRegistered--
         if (timesRegistered == 0) {
-            removers.runAll()
+            removers.invokeAll()
             removers.clear()
         }
         super.unregisterAdapterDataObserver(observer)
