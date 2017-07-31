@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewManager
 import android.view.ViewPropertyAnimator
 import com.lightningkite.kotlin.anko.measureDesiredHeight
-import com.lightningkite.kotlin.runAll
+import com.lightningkite.kotlin.invokeAll
 import org.jetbrains.anko._FrameLayout
 import org.jetbrains.anko.custom.ankoView
 import java.util.*
@@ -81,7 +81,7 @@ class TransitionView(context: Context) : _FrameLayout(context) {
             val oldAnimation = oldView.animateOut(this).withEndAction {
                 oldView.visibility = animateOutToVisibilityState
             }
-            onViewChange.runAll(AnimationInfo(
+            onViewChange.invokeAll(AnimationInfo(
                     inView = newView,
                     inAnimator = newAnimation,
                     outView = oldView,
@@ -99,7 +99,7 @@ class TransitionView(context: Context) : _FrameLayout(context) {
         currentView?.visibility = animateOutToVisibilityState
         currentView = view
         view.visibility = View.VISIBLE
-        onViewChange.runAll(AnimationInfo(
+        onViewChange.invokeAll(AnimationInfo(
                 inView = view,
                 inAnimator = null,
                 outView = oldView,
