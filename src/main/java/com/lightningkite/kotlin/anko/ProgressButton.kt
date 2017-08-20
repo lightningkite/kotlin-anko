@@ -65,6 +65,10 @@ class ProgressButton(context: Context) : _FrameLayout(context) {
         button.setOnClickListener(func)
     }
 
+    fun setOnClickListener(func: (View) -> Unit) {
+        button.setOnClickListener(func)
+    }
+
     fun onDisabledClick(func: () -> Unit) {
         onDisabledClickLambda = func
     }
