@@ -1,7 +1,6 @@
 package com.lightningkite.kotlin.anko
 
 import android.widget.EditText
-import com.lightningkite.kotlin.text.toDoubleMaybe
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -163,7 +162,7 @@ fun EditText.autoComma(format: NumberFormat) {
             it.isDigit()
                     || it == NumericalString.decimalChar
                     || it == NumericalString.negativeChar
-        }.toDoubleMaybe(0.0))
+        }.toDoubleOrNull() ?: 0.0)
         val insertionPoint = NumericalString.transformPosition(it.after, resultString, it.insertionPoint + it.replacement.length).coerceIn(0, resultString.length)
         resultString to insertionPoint..insertionPoint
     }
