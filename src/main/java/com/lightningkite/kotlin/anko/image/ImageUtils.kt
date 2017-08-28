@@ -6,9 +6,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import com.lightningkite.kotlin.anko.files.fileSize
 import com.lightningkite.kotlin.anko.files.getRealPath
+import com.lightningkite.kotlincomponents.BuildConfig
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -55,7 +57,14 @@ fun Context.getBitmapFromUri(inputUri: Uri, minBytes: Long): Bitmap? {
 private fun Context.correctBitmapRotation(initialBitmap: Bitmap, inputUri: Uri): Bitmap {
     var bitmap = initialBitmap
     try {
-        val exif = ExifInterface(if (inputUri.scheme == "file") inputUri.path else inputUri.getRealPath(this))
+        val exif = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val exifInterface = contentResolver.openInputStream(inputUri).use { inputStream ->
+                ExifInterface(inputStream)
+            }
+            exifInterface
+        } else {
+            ExifInterface(if (inputUri.scheme == "file") inputUri.path else inputUri.getRealPath(this))
+        }
         val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1)
         when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> {
