@@ -24,36 +24,34 @@ fun EditText.resetCursorColor() {
     }
 }
 
-fun EditText.onDone(action: (text: String) -> Unit) {
-    imeOptions = EditorInfo.IME_ACTION_DONE
+inline fun EditText.onImeAction(crossinline action: (text: String) -> Unit) {
     setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
         if ((event?.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
             action(text.toString())
-            hideSoftInput()
             return@OnKeyListener true
         }
         false
     })
     setOnEditorActionListener({ v, actionId, event ->
         action(text.toString())
-        hideSoftInput()
         true
     })
 }
 
-fun EditText.onSend(action: (text: String) -> Unit) {
-    imeOptions = EditorInfo.IME_ACTION_SEND
-    setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-        if ((event?.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-            action(text.toString())
-            return@OnKeyListener true
-        }
-        false
-    })
-    setOnEditorActionListener({ v, actionId, event ->
+inline fun EditText.onDone(crossinline action: (text: String) -> Unit) {
+    imeOptions = EditorInfo.IME_ACTION_DONE
+    onImeAction {
+        hideSoftInput()
         action(text.toString())
-        true
-    })
+    }
+}
+
+inline fun EditText.onSend(crossinline action: (text: String) -> Unit) {
+    imeOptions = EditorInfo.IME_ACTION_SEND
+    onImeAction {
+        hideSoftInput()
+        action(text.toString())
+    }
 }
 
 fun EditText.setCursorColor(color: Int) {

@@ -37,11 +37,19 @@ fun Collection<Validation>.validOrSnackbar(snackView:View):Boolean{
         if(view is TextInputLayout){
             view.error = null
         }
+        val parentView = view?.parent
+        if (parentView is TextInputLayout) {
+            parentView.error = null
+        }
     }
     for(issue in issues){
         val view = issue.view
         if(view is TextInputLayout){
             view.error = issue.message
+        }
+        val parentView = view?.parent
+        if (parentView is TextInputLayout) {
+            parentView.error = issue.message
         }
     }
 
