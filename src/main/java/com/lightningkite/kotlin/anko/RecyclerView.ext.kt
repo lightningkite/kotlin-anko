@@ -74,13 +74,17 @@ inline fun RecyclerView.horizontalDivider(drawable: Drawable, dividerSize: Int =
 
                 val top = child.visualTop - dividerSize;
 
-                drawable.setBounds(left, top, right, top + dividerSize);
-                drawable.draw(c);
+                if (i != 0) {
+                    drawable.setBounds(left, top, right, top + dividerSize);
+                    drawable.draw(c);
+                }
 
                 val bottom = child.visualBottom;
 
-                drawable.setBounds(left, bottom, right, bottom + dividerSize);
-                drawable.draw(c);
+                if (i != parent.childCount - 1) {
+                    drawable.setBounds(left, bottom, right, bottom + dividerSize);
+                    drawable.draw(c);
+                }
             }
         }
 
