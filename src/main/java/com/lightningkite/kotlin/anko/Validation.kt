@@ -2,6 +2,7 @@ package com.lightningkite.kotlin.anko
 
 import android.support.design.widget.TextInputLayout
 import android.view.View
+import android.widget.TextView
 
 /**
  * Created by joseph on 8/1/16.
@@ -37,25 +38,29 @@ fun Collection<Validation>.validOrSnackbar(snackView:View):Boolean{
         if(view is TextInputLayout){
             view.error = null
         }
-        val parentView = view?.parent
-        if (parentView is TextInputLayout) {
-            parentView.error = null
+        if (view is TextView) {
+            view.error = null
         }
     }
-    for(issue in issues){
+
+    val unhandled = ArrayList<ValidationIssue>()
+    for (issue in issues.asReversed()) {
         val view = issue.view
         if(view is TextInputLayout){
             view.error = issue.message
-        }
-        val parentView = view?.parent
-        if (parentView is TextInputLayout) {
-            parentView.error = issue.message
+        } else if (view is TextView) {
+            view.error = issue.message
+        } else {
+            unhandled += issue
         }
     }
 
     val error = issues.first()
     error.view?.requestFocus()
-    snackView.snackbar(error.message)
+
+    unhandled.firstOrNull()?.let {
+        snackView.snackbar(it.message)
+    }
 
     return false
 }
