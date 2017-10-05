@@ -221,8 +221,6 @@ fun View.forThisAndAllChildrenRecursive(action: (View) -> Unit) {
 
 /**
  * Gets a lifecycle object for events to connect with.
- * There is only one lifecycle object that is recycled, so the lifecycle returned expires when
- * another lifecycle is requested.
  */
 val View.lifecycle: ViewLifecycleListener
     get() = View_lifecycleListener.getOrPut(this) {
