@@ -62,6 +62,21 @@ fun View.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackba
     }
 }
 
+fun View.snackbarMultiline(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
+    try {
+        val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
+        snack.setText(text)
+        snack.duration = duration
+        snack.view.setSubviewsTextColor(Color.WHITE)
+        val textView = snack.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+        textView.maxLines = 5
+        snack.init()
+        snack.show()
+    } catch(e: Exception) {
+        e.printStackTrace()
+    }
+}
+
 fun Snackbar.onDismissed(lambda: (event: Int) -> Unit) {
     setCallback(object : Snackbar.Callback() {
         override fun onDismissed(snackbar: Snackbar?, event: Int) {
