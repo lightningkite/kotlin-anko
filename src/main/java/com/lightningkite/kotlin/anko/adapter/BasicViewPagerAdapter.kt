@@ -16,13 +16,13 @@ open class BasicViewPagerAdapter(val makeView: ViewGroup.(Int) -> View) : PagerA
         return makeView(container, position)
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, item: Any?) {
+    override fun destroyItem(container: ViewGroup, position: Int, item: Any) {
         container.removeView(item as View)
     }
 
     override fun getCount(): Int = itemCount
 
-    override fun isViewFromObject(view: View?, item: Any?): Boolean {
+    override fun isViewFromObject(view: View, item: Any): Boolean {
         return view == item
     }
 }
