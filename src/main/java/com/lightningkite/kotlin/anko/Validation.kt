@@ -11,6 +11,7 @@ import android.widget.TextView
  *
  * Make a collection of these and use the extension functions below.
  */
+@Deprecated("Use the new validation system in the observable package.")
 class Validation(
         val view: View? = null,
         val validator:()->String? = {null}
@@ -22,14 +23,20 @@ class Validation(
     operator fun component1():View? = view
     operator fun component2():View? = view
 }
+
+@Deprecated("Use the new validation system in the observable package.")
 class ValidationIssue(
-    val view: View? = null,
-    val message:String = ""
+        val view: View? = null,
+        val message:String = ""
 )
 
+@Deprecated("Use the new validation system in the observable package.")
 fun Collection<Validation>.issues(): List<ValidationIssue> = mapNotNull { it.getIssue() }
+
+@Deprecated("Use the new validation system in the observable package.")
 fun Collection<Validation>.firstIssue(): ValidationIssue? = mapNotNull { it.getIssue() }.firstOrNull()
 
+@Deprecated("Use the new validation system in the observable package.")
 fun Collection<Validation>.validOrSnackbar(snackView:View):Boolean{
     val issues = issues()
     if(issues.isEmpty()) return true
@@ -65,6 +72,7 @@ fun Collection<Validation>.validOrSnackbar(snackView:View):Boolean{
     return false
 }
 
+@Deprecated("Use the new validation system in the observable package.")
 fun MutableCollection<Validation>.quickAdd(view:View, errorResource:Int, check:()->Boolean){
     add(Validation(view, {
         if(!check()){
