@@ -6,7 +6,7 @@ group = "com.github.lightningkite"
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 16
@@ -15,9 +15,15 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        staging {
+
         }
     }
 
@@ -39,20 +45,20 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'org.jetbrains.anko:anko-sdk15:0.9'
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.9'
-    compile 'com.android.support:cardview-v7:26.1.0'
-    compile 'org.jetbrains.anko:anko-cardview-v7:0.9'
-    compile 'com.android.support:gridlayout-v7:26.1.0'
-    compile 'org.jetbrains.anko:anko-gridlayout-v7:0.9'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'org.jetbrains.anko:anko-recyclerview-v7:0.9'
-    compile 'com.android.support:design:26.1.0'
-    compile 'org.jetbrains.anko:anko-design:0.9'
-    compile project(path: ':kotlin-core')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api 'org.jetbrains.anko:anko-sdk15:0.9'
+    api 'com.android.support:appcompat-v7:26.1.0'
+    api 'org.jetbrains.anko:anko-appcompat-v7:0.9'
+    api 'com.android.support:cardview-v7:26.1.0'
+    api 'org.jetbrains.anko:anko-cardview-v7:0.9'
+    api 'com.android.support:gridlayout-v7:26.1.0'
+    api 'org.jetbrains.anko:anko-gridlayout-v7:0.9'
+    api 'com.android.support:recyclerview-v7:26.1.0'
+    api 'org.jetbrains.anko:anko-recyclerview-v7:0.9'
+    api 'com.android.support:design:26.1.0'
+    api 'org.jetbrains.anko:anko-design:0.9'
+    api project(path: ':kotlin-core')
 }
 
 // build a jar with source files
@@ -66,7 +72,7 @@ artifacts {
 }
 
 buildscript {
-    ext.kotlin_version = '1.1.2-5'
+    ext.kotlin_version = '1.1.51'
     repositories {
         mavenCentral()
         jcenter()

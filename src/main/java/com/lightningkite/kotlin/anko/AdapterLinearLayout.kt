@@ -7,8 +7,6 @@ import android.widget.LinearLayout
 import android.widget.ListAdapter
 import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.matchParent
-import org.jetbrains.anko.onClick
-import org.jetbrains.anko.onLongClick
 import org.jetbrains.anko.wrapContent
 
 /**
@@ -35,10 +33,10 @@ open class AdapterLinearLayout(context: Context, val stretchMode: Boolean) : Lin
         val _adapter = _adapter ?: return
         for (i in 0.._adapter.count - 1) {
             val view = _adapter.getView(i, null, this)
-            view.onClick {
+            view.onClickWithCooldown {
                 onItemClick.invoke(this, view, i, _adapter.getItemId(i))
             }
-            view.onLongClick {
+            view.setOnLongClickListener {
                 onItemLongClick.invoke(this, view, i, _adapter.getItemId(i))
             }
             addView(view, getParams())
