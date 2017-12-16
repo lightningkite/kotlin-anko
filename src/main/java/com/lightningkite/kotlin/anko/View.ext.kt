@@ -13,6 +13,7 @@ import com.lightningkite.kotlin.lifecycle.LifecycleConnectable
 import com.lightningkite.kotlin.lifecycle.LifecycleListener
 import org.jetbrains.anko.inputMethodManager
 import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Created by jivie on 3/28/16.
@@ -167,7 +168,7 @@ class ViewLifecycleListener(val view: View) : View.OnAttachStateChangeListener, 
 
     var attached = view.isAttachedToWindowCompat()
         private set
-    private val lifecycleListeners = ArrayList<LifecycleListener>()
+    private val lifecycleListeners = CopyOnWriteArrayList<LifecycleListener>()
 
     override fun onViewDetachedFromWindow(v: View?) {
         if (!attached) {
