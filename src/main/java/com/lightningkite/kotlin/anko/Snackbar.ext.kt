@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.widget.NestedScrollView
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -12,6 +13,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import org.jetbrains.anko.findOptional
+import org.jetbrains.anko.textColor
 
 /**
  * Created by josep on 3/3/2016.
@@ -41,7 +43,8 @@ fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init
         val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
         snack.setText(text)
         snack.duration = duration
-        snack.view.setSubviewsTextColor(Color.WHITE)
+        val textView = snack.view.findOptional<TextView>(android.support.design.R.id.snackbar_text)
+        textView?.textColor = Color.WHITE
         snack.init()
         snack.show()
     } catch(e: Exception) {
@@ -54,7 +57,8 @@ fun View.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackba
         val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
         snack.setText(text)
         snack.duration = duration
-        snack.view.setSubviewsTextColor(Color.WHITE)
+        val textView = snack.view.findOptional<TextView>(android.support.design.R.id.snackbar_text)
+        textView?.textColor = Color.WHITE
         snack.init()
         snack.show()
     } catch(e: Exception) {
@@ -67,9 +71,9 @@ fun View.snackbarMultiline(text: Int, duration: Int = Snackbar.LENGTH_LONG, init
         val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
         snack.setText(text)
         snack.duration = duration
-        snack.view.setSubviewsTextColor(Color.WHITE)
-        val textView = snack.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
-        textView.maxLines = 5
+        val textView = snack.view.findOptional<TextView>(android.support.design.R.id.snackbar_text)
+        textView?.textColor = Color.WHITE
+        textView?.maxLines = 5
         snack.init()
         snack.show()
     } catch(e: Exception) {
