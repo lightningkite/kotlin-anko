@@ -17,7 +17,7 @@ class HeaderItemDecoration(val myView: View) : RecyclerView.ItemDecoration() {
         super.onDraw(c, parent, state)
 
         myView.measure(
-                View.MeasureSpec.makeMeasureSpec(parent.width, View.MeasureSpec.AT_MOST),
+                View.MeasureSpec.makeMeasureSpec(parent.width, View.MeasureSpec.EXACTLY),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
         )
         myView.layout(parent.left, 0, parent.right, myView.measuredHeight);
@@ -51,5 +51,7 @@ class HeaderItemDecoration(val myView: View) : RecyclerView.ItemDecoration() {
 inline fun RecyclerView.header(
         crossinline makeView: AnkoContext<Unit>.() -> Unit
 ) {
-    addItemDecoration(HeaderItemDecoration(AnkoContextImpl(context, Unit, false).apply { makeView() }.view))
+    addItemDecoration(HeaderItemDecoration(AnkoContextImpl(context, Unit, false).apply { makeView() }.view.apply {
+        lifecycle.deferRecursive(this@header.lifecycle)
+    }))
 }

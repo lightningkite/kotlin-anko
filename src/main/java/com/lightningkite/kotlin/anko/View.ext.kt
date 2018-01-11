@@ -168,6 +168,7 @@ class ViewLifecycleListener(val view: View) : View.OnAttachStateChangeListener, 
     var attached = view.isAttachedToWindowCompat()
         private set
     private val lifecycleListeners = ArrayList<LifecycleListener>()
+    var defer: LifecycleConnectable? = null
 
     override fun onViewDetachedFromWindow(v: View?) {
         if (!attached) {
@@ -188,24 +189,33 @@ class ViewLifecycleListener(val view: View) : View.OnAttachStateChangeListener, 
     }
 
     override fun connect(listener: LifecycleListener) {
-        if (attached) {
-            listener.onStart()
+        val defer = defer
+        if (defer == null) {
+            if (attached) {
+                listener.onStart()
+            }
+            lifecycleListeners.add(listener)
+        } else {
+            defer.connect(listener)
         }
-        lifecycleListeners.add(listener)
     }
 
-    fun setAlwaysOn() {
+    fun defer(other: LifecycleConnectable) {
         view.removeOnAttachStateChangeListener(this)
-        if (!attached) {
-            attached = true
-            lifecycleListeners.forEach { it.onStart() }
+        if (attached) {
+            lifecycleListeners.forEach {
+                it.onStop()
+            }
         }
+        lifecycleListeners.forEach {
+            other.connect(it)
+        }
+        defer = other
     }
 
-    fun setAlwaysOnRecursive() {
-        setAlwaysOn()
+    fun deferRecursive(other: LifecycleConnectable) {
         view.forThisAndAllChildrenRecursive {
-            View_lifecycleListener[it]?.setAlwaysOn()
+            defer(other)
         }
     }
 }
