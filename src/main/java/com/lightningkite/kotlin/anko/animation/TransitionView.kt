@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewManager
 import android.view.ViewPropertyAnimator
 import com.lightningkite.kotlin.anko.measureDesiredHeight
-import com.lightningkite.kotlin.invokeAll
+import com.lightningkite.kotlin.lambda.invokeAll
 import org.jetbrains.anko._FrameLayout
 import org.jetbrains.anko.custom.ankoView
 import java.util.*
