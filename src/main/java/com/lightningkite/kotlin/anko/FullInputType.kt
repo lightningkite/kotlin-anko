@@ -3,6 +3,7 @@ package com.lightningkite.kotlin.anko
 import android.text.InputType
 
 /**
+ * A convenience object with commonly used [InputType] settings.
  * Created by jivie on 6/17/16.
  */
 object FullInputType {

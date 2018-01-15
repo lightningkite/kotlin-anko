@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
+ * A simple adapter for [ViewPager].
  * Created by joseph on 11/16/16.
  */
 open class BasicViewPagerAdapter(val makeView: ViewGroup.(Int) -> View) : PagerAdapter() {
@@ -27,6 +28,9 @@ open class BasicViewPagerAdapter(val makeView: ViewGroup.(Int) -> View) : PagerA
     }
 }
 
+/**
+ * A simple adapter for [ViewPager], where views are built by [makeView].
+ */
 fun ViewPager.basicAdapter(count: Int, makeView: ViewGroup.(Int) -> View) = BasicViewPagerAdapter(makeView).apply {
     itemCount = count
 }

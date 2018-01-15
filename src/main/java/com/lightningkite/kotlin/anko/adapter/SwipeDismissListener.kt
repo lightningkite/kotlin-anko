@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 
 /**
- *
+ * Listener for easily making swipe-away gestures for a [RecyclerView].
  * Created by jivie on 2/11/16.
  */
 open class SwipeDismissListener(
@@ -27,9 +27,12 @@ open class SwipeDismissListener(
     }
 }
 
-inline fun RecyclerView.swipeToDismiss(
-        noinline canDismiss: (Int) -> Boolean = { true },
-        noinline action: (Int) -> Unit
+/**
+ * Easily make swipe-away gestures for a [RecyclerView].
+ */
+fun RecyclerView.swipeToDismiss(
+        canDismiss: (Int) -> Boolean = { true },
+        action: (Int) -> Unit
 ) {
     val listener = SwipeDismissListener(canDismiss, action)
     ItemTouchHelper(listener).attachToRecyclerView(this)

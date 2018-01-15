@@ -1,22 +1,17 @@
 package com.lightningkite.kotlin.anko
 
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import android.os.Build
+import android.support.v4.content.res.ResourcesCompat
 
 /**
+ * Compat wrappers
  * Created by jivie on 5/4/16.
  */
-fun Resources.getColorCompat(resources: Int): Int {
-    return if (Build.VERSION.SDK_INT >= 23)
-        getColor(resources, null)
-    else
-        getColor(resources)
-}
 
-fun Resources.getDrawableCompat(resources: Int): Drawable {
-    return if (Build.VERSION.SDK_INT >= 23)
-        getDrawable(resources, null)
-    else
-        getDrawable(resources)
-}
+fun Resources.getColorCompat(resource: Int): Int = ResourcesCompat.getColor(this, resource, null)
+
+fun Resources.getDrawableCompat(resource: Int): Drawable = ResourcesCompat.getDrawable(this, resource, null)!!
+
+fun Resources.getColorStateListCompat(resource: Int): ColorStateList = ResourcesCompat.getColorStateList(this, resource, null)!!

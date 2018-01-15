@@ -10,6 +10,10 @@ import org.jetbrains.anko.AnkoContextImpl
 import java.util.*
 
 /**
+ * Adds sticky headers to a [RecyclerView].
+ * @param list A reference to the list that the sticky headers are applied to.
+ * @param sort A lambda that sorts the items into categories.
+ * @param makeView A lambda that generates a view based on the category.
  * Created by josep on 2/11/2016.
  */
 class StickyHeadersItemDecorator<T : Any, K>(
@@ -96,6 +100,13 @@ class StickyHeadersItemDecorator<T : Any, K>(
     }
 }
 
+/**
+ * Adds sticky headers.
+ * @param list A reference to the list that the sticky headers are applied to.
+ * @param sort A lambda that sorts the items into categories.
+ * @param makeView A lambda that generates a view based on the category.
+ * Created by josep on 2/11/2016.
+ */
 inline fun <T : Any, K> RecyclerView.stickyHeaders(
         list: List<T>,
         noinline sort: (T) -> K,

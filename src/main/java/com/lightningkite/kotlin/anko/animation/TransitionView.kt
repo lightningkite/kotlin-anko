@@ -5,7 +5,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewManager
 import android.view.ViewPropertyAnimator
-import com.lightningkite.kotlin.anko.measureDesiredHeight
+import com.lightningkite.kotlin.anko.measureDesiredSize
 import com.lightningkite.kotlin.lambda.invokeAll
 import org.jetbrains.anko._FrameLayout
 import org.jetbrains.anko.custom.ankoView
@@ -120,9 +120,11 @@ inline fun ViewManager.transitionView(init: TransitionView.() -> Unit): Transiti
 fun TransitionView.animateHeight() {
     onViewChange += {
         if (it.inAnimator != null) {
-            heightAnimator(it.inView.measureDesiredHeight()).setDuration(it.inAnimator.duration).start()
+            val size = it.inView.measureDesiredSize()
+            heightAnimator(size.y).setDuration(it.inAnimator.duration).start()
         } else {
-            layoutParams.height = it.inView.measureDesiredHeight()
+            val size = it.inView.measureDesiredSize()
+            layoutParams.height = size.y
         }
     }
 }

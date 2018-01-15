@@ -3,7 +3,7 @@ package com.lightningkite.kotlin.anko
 import android.graphics.drawable.Drawable
 
 /**
- * Various helper functions
+ * Various helper functions for drawables.
  * Created by jivie on 2/9/16.
  */
 

@@ -1,5 +1,6 @@
 package com.lightningkite.kotlin.anko.image
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -10,7 +11,6 @@ import android.os.Build
 import android.util.Log
 import com.lightningkite.kotlin.anko.files.fileSize
 import com.lightningkite.kotlin.anko.files.getRealPath
-import com.lightningkite.kotlincomponents.BuildConfig
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -54,6 +54,7 @@ fun Context.getBitmapFromUri(inputUri: Uri, minBytes: Long): Bitmap? {
 /**
  * Corrects the rotation of a bitmap based on the EXIF tags in the file as specified by the URI
  */
+@SuppressLint("NewApi")
 private fun Context.correctBitmapRotation(initialBitmap: Bitmap, inputUri: Uri): Bitmap {
     var bitmap = initialBitmap
     try {

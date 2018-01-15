@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 
 /**
+ * An adapter with only one item, representing that the underlying data is empty.
  * Created by jivie on 2/29/16.
  */
 class EmptyAdapter(val viewMaker: () -> View) : BaseAdapter() {

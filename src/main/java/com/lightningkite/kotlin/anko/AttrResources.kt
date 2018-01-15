@@ -5,7 +5,7 @@ import android.util.TypedValue
 import android.view.View
 
 /**
- * Created by josep on 3/3/2016.
+ * Returns the default, clear background for selectable items.  Reacts when touched.
  */
 val View.selectableItemBackgroundResource: Int
     get() {
@@ -19,6 +19,9 @@ val View.selectableItemBackgroundResource: Int
         return 0
     }
 
+/**
+ * Returns the default, clear background for selectable items without a border.  Reacts when touched.
+ */
 val View.selectableItemBackgroundBorderlessResource: Int
     get() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

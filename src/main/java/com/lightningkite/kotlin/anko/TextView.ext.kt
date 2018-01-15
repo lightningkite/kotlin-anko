@@ -15,22 +15,22 @@ import java.util.*
 var TextView.textColorResource: Int
     get() = throw IllegalAccessException()
     set(value) {
-        setTextColor(resources.getColor(value))
+        setTextColor(resources.getColorCompat(value))
     }
 var TextView.hintTextColorResource: Int
     get() = throw IllegalAccessException()
     set(value) {
-        setHintTextColor(resources.getColor(value))
+        setHintTextColor(resources.getColorCompat(value))
     }
 var TextView.textColorsResource: Int
     get() = throw IllegalAccessException()
     set(value) {
-        setTextColor(resources.getColorStateList(value))
+        setTextColor(resources.getColorStateListCompat(value))
     }
 var TextView.hintTextColorsResource: Int
     get() = throw IllegalAccessException()
     set(value) {
-        setHintTextColor(resources.getColorStateList(value))
+        setHintTextColor(resources.getColorStateListCompat(value))
     }
 
 val fontCache: HashMap<String, Typeface> = HashMap()
@@ -41,19 +41,19 @@ fun TextInputLayout.setFont(fileName: String) {
     setTypeface(fontCache.getOrPut(fileName){Typeface.createFromAsset(context.assets, fileName) } )
 }
 
-inline fun TextView.leftDrawable(resourceId: Int) {
+fun TextView.leftDrawable(resourceId: Int) {
     setCompoundDrawablesWithIntrinsicBounds(resources.getDrawableCompat(resourceId), null, null, null)
 }
 
-inline fun TextView.rightDrawable(resourceId: Int) {
+fun TextView.rightDrawable(resourceId: Int) {
     setCompoundDrawablesWithIntrinsicBounds(null, null, resources.getDrawableCompat(resourceId), null)
 }
 
-inline fun TextView.topDrawable(resourceId: Int) {
+fun TextView.topDrawable(resourceId: Int) {
     setCompoundDrawablesWithIntrinsicBounds(null, resources.getDrawableCompat(resourceId), null, null)
 }
 
-inline fun TextView.bottomDrawable(resourceId: Int) {
+fun TextView.bottomDrawable(resourceId: Int) {
     setCompoundDrawablesWithIntrinsicBounds(null, null, null, resources.getDrawableCompat(resourceId))
 }
 

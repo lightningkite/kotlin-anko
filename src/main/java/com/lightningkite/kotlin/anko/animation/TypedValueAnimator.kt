@@ -3,6 +3,7 @@ package com.lightningkite.kotlin.anko.animation
 import android.animation.ValueAnimator
 
 /**
+ * Properly typed value animators.
  * Created by jivie on 6/30/16.
  */
 object TypedValueAnimator {

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import java.util.*
 
 /**
- * An adapter for RecyclerViews that contains other adapters.
+ * An adapter for [RecyclerView]s that animates between other adapters.
  *
  * Created by jivie on 5/4/16.
  */
@@ -85,4 +85,7 @@ class TransitionRecyclerViewAdapter(
             = (current!! as RecyclerView.Adapter<RecyclerView.ViewHolder>).onBindViewHolder(holder, position)
 }
 
+/**
+ * Creates an adapter for [RecyclerView]s that animates between other adapters.
+ */
 inline fun RecyclerView.transitionAdapter(setup: TransitionRecyclerViewAdapter.() -> Unit) = TransitionRecyclerViewAdapter(context).apply(setup)

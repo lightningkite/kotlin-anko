@@ -14,6 +14,7 @@ import android.widget.Toast
 import org.jetbrains.anko.findOptional
 
 /**
+ * Various extensions for working with snackbars.
  * Created by josep on 3/3/2016.
  */
 
@@ -29,7 +30,7 @@ private fun View.setSubviewsTextColor(color: Int) {
     }
 }
 
-private fun ForcePrivateSnackbarConstructor(group: ViewGroup): Snackbar {
+private fun obtainSnackbar(group: ViewGroup): Snackbar {
 //    val constructor = Snackbar::class.java.getDeclaredConstructor(ViewGroup::class.java)
 //    constructor.isAccessible = true
 //    return constructor.newInstance(group)
@@ -38,7 +39,7 @@ private fun ForcePrivateSnackbarConstructor(group: ViewGroup): Snackbar {
 
 fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
     try {
-        val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
+        val snack = obtainSnackbar(findSuitableParent(this))
         snack.setText(text)
         snack.duration = duration
         snack.view.setSubviewsTextColor(Color.WHITE)
@@ -51,7 +52,7 @@ fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init
 
 fun View.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackbar.() -> Unit = {}) {
     try {
-        val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
+        val snack = obtainSnackbar(findSuitableParent(this))
         snack.setText(text)
         snack.duration = duration
         snack.view.setSubviewsTextColor(Color.WHITE)

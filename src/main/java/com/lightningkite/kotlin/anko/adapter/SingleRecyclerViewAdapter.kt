@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import org.jetbrains.anko.AnkoContextImpl
 
 /**
+ * An adapter with a single view.
  * Created by joseph on 9/20/16.
  */
 class SingleRecyclerViewAdapter(
@@ -35,4 +36,7 @@ class SingleRecyclerViewAdapter(
     }
 }
 
+/**
+ * Create an adapter that has a single view.
+ */
 fun RecyclerView.singleAdapter(makeView: SingleRecyclerViewAdapter.SRVAContext.() -> Unit) = SingleRecyclerViewAdapter(makeView)

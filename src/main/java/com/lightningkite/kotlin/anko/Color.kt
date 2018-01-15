@@ -7,15 +7,15 @@ import android.graphics.Color
  * Created by jivie on 5/23/16.
  */
 
-inline fun Int.alpha(alpha: Int): Int {
+fun Int.alpha(alpha: Int): Int {
     return (this and 0x00FFFFFF) or (alpha shl 24)
 }
 
-inline fun Int.alpha(alpha: Float): Int {
+fun Int.alpha(alpha: Float): Int {
     return (this and 0x00FFFFFF) or ((alpha.coerceIn(0f, 1f) * 0xFF).toInt() shl 24)
 }
 
-inline fun Int.colorMultiply(value: Double): Int {
+fun Int.colorMultiply(value: Double): Int {
     return Color.argb(
             Color.alpha(this),
             (Color.red(this) * value).toInt().coerceIn(0, 255),
@@ -24,7 +24,7 @@ inline fun Int.colorMultiply(value: Double): Int {
     )
 }
 
-inline fun Int.colorMultiply(value: Float): Int {
+fun Int.colorMultiply(value: Float): Int {
     return Color.argb(
             Color.alpha(this),
             (Color.red(this) * value).toInt().coerceIn(0, 255),
@@ -33,7 +33,7 @@ inline fun Int.colorMultiply(value: Float): Int {
     )
 }
 
-inline fun Int.colorAdd(value: Double): Int {
+fun Int.colorAdd(value: Double): Int {
     return Color.argb(
             Color.alpha(this),
             (Color.red(this) + (value * 0xFF).toInt()).coerceIn(0, 255),
@@ -42,7 +42,7 @@ inline fun Int.colorAdd(value: Double): Int {
     )
 }
 
-inline fun Int.colorAdd(value: Float): Int {
+fun Int.colorAdd(value: Float): Int {
     return Color.argb(
             Color.alpha(this),
             (Color.red(this) + (value * 0xFF).toInt()).coerceIn(0, 255),

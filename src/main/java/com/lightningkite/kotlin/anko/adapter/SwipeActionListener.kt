@@ -9,7 +9,7 @@ import com.lightningkite.kotlin.anko.alpha
 import com.lightningkite.kotlin.anko.setBoundsCentered
 
 /**
- *
+ * Listener that allows you to easily make two swipe actions on a [RecyclerView].
  * Created by jivie on 2/11/16.
  */
 open class SwipeActionListener(
@@ -105,6 +105,9 @@ open class SwipeActionListener(
     }
 }
 
+/**
+ * Easily make two swipe actions on a [RecyclerView].
+ */
 fun RecyclerView.swipe(leftAction: SwipeActionListener.SwipeAction?, rightAction: SwipeActionListener.SwipeAction?, padding: Int) {
     val listener = SwipeActionListener(leftAction, rightAction, padding)
     ItemTouchHelper(listener).attachToRecyclerView(this)

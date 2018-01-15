@@ -9,13 +9,13 @@ import org.jetbrains.anko.sp
  * Created by jivie on 4/28/16.
  */
 
-inline fun TabLayout.setTabTextSize(sp: Float) {
+fun TabLayout.setTabTextSize(sp: Float) {
     val field = TabLayout::class.java.getDeclaredField("mTabTextSize")
     field.isAccessible = true
     field.set(this, sp(sp))
 }
 
-inline fun TabLayout.setTabBackgroundResource(res: Int) {
+fun TabLayout.setTabBackgroundResource(res: Int) {
     val field = TabLayout::class.java.getDeclaredField("mTabBackgroundResId")
     field.isAccessible = true
     field.set(this, res)

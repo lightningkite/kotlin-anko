@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 
 /**
+ * A literally empty [RecyclerView.Adapter].
  * Created by joseph on 9/20/16.
  */
 class EmptyRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

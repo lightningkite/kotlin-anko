@@ -1,5 +1,6 @@
 package com.lightningkite.kotlin.anko
 
+import android.annotation.SuppressLint
 import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
@@ -10,6 +11,7 @@ import android.os.Looper
 /**
  * This function does assume we have permission already.
  */
+@SuppressLint("MissingPermission")
 inline fun LocationManager.requestSingleUpdate(
         criteria: Criteria = Criteria(),
         crossinline onLocationHad: (Location) -> Unit

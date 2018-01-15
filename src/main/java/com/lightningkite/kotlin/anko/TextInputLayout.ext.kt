@@ -6,8 +6,10 @@ import android.support.design.widget.TextInputLayout
 import org.jetbrains.anko.custom.ankoView
 
 /**
+ * Various convenience extensions for [TextInputLayout]
  * Created by josep on 3/3/2016.
  */
+
 var TextInputLayout.hintResource: Int
     get() = throw IllegalAccessException()
     set(value) {

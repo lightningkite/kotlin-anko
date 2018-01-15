@@ -154,10 +154,16 @@ class MultiRecyclerViewAdapter(
     }
 }
 
-inline fun RecyclerView.multiAdapter(
+/**
+ * Create an adapter that has multiple [RecyclerView.Adapter]s, one after the other.
+ */
+fun RecyclerView.multiAdapter(
         adapters: List<RecyclerView.Adapter<*>>
 ): MultiRecyclerViewAdapter = MultiRecyclerViewAdapter(context, adapters)
 
-inline fun RecyclerView.multiAdapter(
+/**
+ * Create an adapter that has multiple [RecyclerView.Adapter]s, one after the other.
+ */
+fun RecyclerView.multiAdapter(
         vararg adapterArgs: RecyclerView.Adapter<*>
 ): MultiRecyclerViewAdapter = multiAdapter(adapterArgs.toList())

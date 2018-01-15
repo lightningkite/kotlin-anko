@@ -13,22 +13,22 @@ import org.jetbrains.anko.leftPadding
  *
  */
 
-inline fun TextView.materialStyleTertiary(dark: Boolean) {
+fun TextView.materialStyleTertiary(dark: Boolean) {
     textColorResource = if (dark) android.R.color.tertiary_text_dark else android.R.color.tertiary_text_light
     ellipsize = TextUtils.TruncateAt.END
 }
 
-inline fun TextView.materialStyleSecondary(dark: Boolean) {
+fun TextView.materialStyleSecondary(dark: Boolean) {
     textColorResource = if (dark) android.R.color.secondary_text_dark else android.R.color.secondary_text_light
     ellipsize = TextUtils.TruncateAt.END
 }
 
-inline fun TextView.materialStylePrimary(dark: Boolean) {
+fun TextView.materialStylePrimary(dark: Boolean) {
     textColorResource = if (dark) android.R.color.primary_text_dark else android.R.color.primary_text_light
     ellipsize = TextUtils.TruncateAt.END
 }
 
-inline fun ImageButton.materialStyleAction() {
+fun ImageButton.materialStyleAction() {
     leftPadding = dip(16)
     backgroundResource = selectableItemBackgroundBorderlessResource
 }

@@ -13,6 +13,7 @@ import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.layoutInflater
 
 /**
+ * Various extensions for [RecyclerView]
  * Created by joseph on 3/3/2016.
  */
 
@@ -57,7 +58,7 @@ inline fun ViewManager.horizontalGridRecyclerView(spanCount: Int, init: Recycler
     }
 }, 0, init)
 
-inline fun RecyclerView.horizontalDivider(drawable: Drawable, dividerSize: Int = drawable.intrinsicHeight.coerceAtLeast(1), padding: Int = 0) {
+fun RecyclerView.horizontalDivider(drawable: Drawable, dividerSize: Int = drawable.intrinsicHeight.coerceAtLeast(1), padding: Int = 0) {
     addItemDecoration(object : RecyclerView.ItemDecoration() {
 
         override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
