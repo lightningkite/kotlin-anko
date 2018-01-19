@@ -19,9 +19,9 @@ private class DebounceZero(val delay: Long, val action: () -> Unit) : () -> Unit
 
     override fun invoke() {
         if (posted) {
-            AndroidAsync.uiHandler.removeCallbacks(runnable)
+            UIThread.uiHandler.removeCallbacks(runnable)
         }
-        AndroidAsync.uiHandler.postDelayed(runnable, delay)
+        UIThread.uiHandler.postDelayed(runnable, delay)
         posted = true
     }
 }
@@ -36,9 +36,9 @@ private class DebounceOne<A>(val delay: Long, val action: (A) -> Unit) : (A) -> 
             action(a)
         }
         if (posted) {
-            AndroidAsync.uiHandler.removeCallbacks(runnable)
+            UIThread.uiHandler.removeCallbacks(runnable)
         }
-        AndroidAsync.uiHandler.postDelayed(runnable, delay)
+        UIThread.uiHandler.postDelayed(runnable, delay)
         posted = true
     }
 }
@@ -53,9 +53,9 @@ private class DebounceTwo<A, B>(val delay: Long, val action: (A, B) -> Unit) : (
             action(a, b)
         }
         if (posted) {
-            AndroidAsync.uiHandler.removeCallbacks(runnable)
+            UIThread.uiHandler.removeCallbacks(runnable)
         }
-        AndroidAsync.uiHandler.postDelayed(runnable, delay)
+        UIThread.uiHandler.postDelayed(runnable, delay)
         posted = true
     }
 }
@@ -70,9 +70,9 @@ private class DebounceThree<A, B, C>(val delay: Long, val action: (A, B, C) -> U
             action(a, b, c)
         }
         if (posted) {
-            AndroidAsync.uiHandler.removeCallbacks(runnable)
+            UIThread.uiHandler.removeCallbacks(runnable)
         }
-        AndroidAsync.uiHandler.postDelayed(runnable, delay)
+        UIThread.uiHandler.postDelayed(runnable, delay)
         posted = true
     }
 }
