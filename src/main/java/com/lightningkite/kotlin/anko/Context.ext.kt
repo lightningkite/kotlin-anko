@@ -87,14 +87,14 @@ fun Context.hideSoftInput() {
 /**
  * Creates a view using Anko.
  */
-fun <T> Context.anko(owner: T, setup: AnkoContextImpl<T>.() -> Unit): View {
+inline fun <T> Context.anko(owner: T, setup: AnkoContextImpl<T>.() -> Unit): View {
     return AnkoContextImpl<T>(this, owner, false).apply(setup).view
 }
 
 /**
  * Creates a view using Anko.
  */
-fun Context.anko(setup: AnkoContextImpl<Context>.() -> Unit): View {
+inline fun Context.anko(setup: AnkoContextImpl<Context>.() -> Unit): View {
     return AnkoContextImpl(this, this, false).apply(setup).view
 }
 
