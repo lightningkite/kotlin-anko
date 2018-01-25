@@ -5,6 +5,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.pm.PackageManager
+import android.os.Build
 import android.view.View
 import org.jetbrains.anko.AnkoContextImpl
 import org.jetbrains.anko.connectivityManager
@@ -15,6 +17,10 @@ import java.util.*
  * Extension functions for Context
  * Created by jivie on 6/1/16.
  */
+
+fun Context.checkSelfPermissionCompat(permission: String): Boolean = if (Build.VERSION.SDK_INT >= 23)
+    checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+else true
 
 fun Context.getActivity(): Activity? {
     if (this is Activity) {
