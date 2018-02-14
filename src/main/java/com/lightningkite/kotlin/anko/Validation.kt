@@ -61,3 +61,13 @@ fun MutableCollection<Validation>.quickAdd(view:View, errorResource:Int, check:(
         }
     }))
 }
+
+fun MutableCollection<Validation>.quickAdd(view: View, errorString: String, check: () -> Boolean){
+    add(Validation(view, {
+        if(!check()){
+            errorString
+        } else {
+            null
+        }
+    }))
+}
