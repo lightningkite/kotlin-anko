@@ -46,7 +46,7 @@ dependencies {
     ext.supportVersion = '26.1.0'
     ext.ankoVersion = '0.10.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlin_version"
     compile "org.jetbrains.anko:anko-sdk15:$ankoVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "org.jetbrains.anko:anko-appcompat-v7:$ankoVersion"
@@ -79,6 +79,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.kotlin_version"
     }
 }
