@@ -13,8 +13,7 @@ class SingleRecyclerViewAdapter(
         val makeView: SRVAContext.() -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = 1
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-    }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return object : RecyclerView.ViewHolder(SRVAContext(this, parent.context).apply { makeView() }.view) {}

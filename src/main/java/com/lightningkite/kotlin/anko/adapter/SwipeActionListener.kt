@@ -20,14 +20,14 @@ open class SwipeActionListener(
 
     data class SwipeAction(val color: Int, val drawable: Drawable, val canDo: (Int) -> Boolean, val action: (Int) -> Unit)
 
-    override fun getMovementFlags(p0: RecyclerView?, p1: RecyclerView.ViewHolder?): Int {
+    override fun getMovementFlags(p0: RecyclerView, p1: RecyclerView.ViewHolder): Int {
         var swipeDirections = 0
         if (leftAction != null) swipeDirections = swipeDirections or ItemTouchHelper.LEFT
         if (rightAction != null) swipeDirections = swipeDirections or ItemTouchHelper.RIGHT
         return makeMovementFlags(0, swipeDirections)
     }
 
-    override fun onMove(p0: RecyclerView?, p1: RecyclerView.ViewHolder?, p2: RecyclerView.ViewHolder?): Boolean = false
+    override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean = false
 
     @Suppress("UNCHECKED_CAST")
     override fun onSwiped(holder: RecyclerView.ViewHolder, swipeDirection: Int) {
