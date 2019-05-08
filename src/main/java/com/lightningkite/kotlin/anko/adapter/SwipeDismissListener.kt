@@ -12,11 +12,10 @@ open class SwipeDismissListener(
         val action: (Int) -> Unit
 ) : ItemTouchHelper.Callback() {
 
-    override fun getMovementFlags(p0: RecyclerView?, holder: RecyclerView.ViewHolder): Int {
-        return makeMovementFlags(0, if (canDismiss(holder.adapterPosition)) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0)
-    }
+    override fun getMovementFlags(p0: RecyclerView, holder: RecyclerView.ViewHolder): Int =
+        makeMovementFlags(0, if (canDismiss(holder.adapterPosition)) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0)
 
-    override fun onMove(p0: RecyclerView?, p1: RecyclerView.ViewHolder?, p2: RecyclerView.ViewHolder?): Boolean = false
+    override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean = false
 
 
     @Suppress("UNCHECKED_CAST")
