@@ -1,6 +1,6 @@
 package com.lightningkite.kotlin.anko
 
-import android.support.design.widget.TextInputLayout
+import com.google.android.material.textfield.TextInputLayout
 import android.view.View
 
 /**

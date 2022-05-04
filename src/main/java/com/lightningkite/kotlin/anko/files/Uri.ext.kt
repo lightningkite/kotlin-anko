@@ -30,7 +30,3 @@ fun Uri.isDownloadsDocument(): Boolean {
 fun Uri.isMediaDocument(): Boolean {
     return "com.android.providers.media.documents" == authority
 }
-
-fun Uri.toByteArray(context: Context): ByteArray {
-    return context.contentResolver.openInputStream(this).toByteArray()
-}

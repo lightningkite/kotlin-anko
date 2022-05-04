@@ -1,7 +1,7 @@
 package com.lightningkite.kotlin.anko.adapter
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 
 /**
  *
@@ -12,11 +12,18 @@ open class SwipeDismissListener(
         val action: (Int) -> Unit
 ) : ItemTouchHelper.Callback() {
 
-    override fun getMovementFlags(p0: RecyclerView?, holder: RecyclerView.ViewHolder): Int {
+    override fun getMovementFlags(
+        recyclerView: RecyclerView,
+        holder: RecyclerView.ViewHolder
+    ): Int {
         return makeMovementFlags(0, if (canDismiss(holder.adapterPosition)) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0)
     }
 
-    override fun onMove(p0: RecyclerView?, p1: RecyclerView.ViewHolder?, p2: RecyclerView.ViewHolder?): Boolean = false
+    override fun onMove(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
+    ): Boolean = false
 
 
     @Suppress("UNCHECKED_CAST")

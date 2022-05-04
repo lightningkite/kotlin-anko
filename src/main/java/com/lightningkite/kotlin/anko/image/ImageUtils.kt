@@ -54,8 +54,18 @@ fun Context.getBitmapFromUri(inputUri: Uri, minBytes: Long): Bitmap? {
  */
 private fun Context.correctBitmapRotation(initialBitmap: Bitmap, inputUri: Uri): Bitmap {
     var bitmap = initialBitmap
+    //When choosing from the photos app on my phone it throws a IllegalArgumentException
+    //saying that the filename is null.  But in this instance we don't need to change the
+    //orientation and the bitmap is not null.
     try {
-        val exif = ExifInterface(if (inputUri.scheme == "file") inputUri.path else inputUri.getRealPath(this))
+        val fileName = if (inputUri.scheme == "file") {
+            inputUri.path
+        } else {
+            inputUri.getRealPath(this)
+        }
+        if (fileName == null)
+            throw java.lang.NullPointerException()
+        val exif = ExifInterface(fileName)
         val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1)
         when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> {
@@ -71,9 +81,6 @@ private fun Context.correctBitmapRotation(initialBitmap: Bitmap, inputUri: Uri):
                 initialBitmap.recycle()
             }
         }
-        //When choosing from the photos app on my phone it throws a IllegalArgumentException
-        //saying that the filename is null.  But in this instance we don't need to change the
-        //orientation and the bitmap is not null.
     } catch (e: IOException) {
         e.printStackTrace()
     } catch (e: NullPointerException) {

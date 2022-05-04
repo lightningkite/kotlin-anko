@@ -1,6 +1,6 @@
 package com.lightningkite.kotlin.anko
 
-import android.support.design.widget.TabLayout
+import com.google.android.material.tabs.TabLayout
 import org.jetbrains.anko.sp
 
 /**

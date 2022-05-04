@@ -2,9 +2,9 @@ package com.lightningkite.kotlin.anko
 
 import android.content.Context
 import android.graphics.Color
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.Snackbar
-import android.support.v4.widget.NestedScrollView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.widget.NestedScrollView
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +43,7 @@ fun View.snackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, init
         val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
         snack.setText(text)
         snack.duration = duration
-        val textView = snack.view.findOptional<TextView>(android.support.design.R.id.snackbar_text)
+        val textView = snack.view.findOptional<TextView>(com.google.android.material.R.id.snackbar_text)
         textView?.textColor = Color.WHITE
         snack.init()
         snack.show()
@@ -57,7 +57,7 @@ fun View.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snackba
         val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
         snack.setText(text)
         snack.duration = duration
-        val textView = snack.view.findOptional<TextView>(android.support.design.R.id.snackbar_text)
+        val textView = snack.view.findOptional<TextView>(com.google.android.material.R.id.snackbar_text)
         textView?.textColor = Color.WHITE
         snack.init()
         snack.show()
@@ -71,7 +71,7 @@ fun View.snackbarMultiline(text: Int, duration: Int = Snackbar.LENGTH_LONG, init
         val snack = ForcePrivateSnackbarConstructor(findSuitableParent(this))
         snack.setText(text)
         snack.duration = duration
-        val textView = snack.view.findOptional<TextView>(android.support.design.R.id.snackbar_text)
+        val textView = snack.view.findOptional<TextView>(com.google.android.material.R.id.snackbar_text)
         textView?.textColor = Color.WHITE
         textView?.maxLines = 5
         snack.init()
@@ -117,13 +117,13 @@ fun Context.snackbar(text: Int, duration: Int = Snackbar.LENGTH_LONG, init: Snac
     }
 }
 
-fun android.support.design.widget.Snackbar.callback(init: _Snackbar_Callback.() -> Unit) {
+fun Snackbar.callback(init: _Snackbar_Callback.() -> Unit) {
     val callback = _Snackbar_Callback()
     callback.init()
     setCallback(callback)
 }
 
-class _Snackbar_Callback : android.support.design.widget.Snackbar.Callback() {
+class _Snackbar_Callback : Snackbar.Callback() {
 
     private var _onShown: ((Snackbar?) -> Unit)? = null
     private var _onDismissed: ((Snackbar?, Int) -> Unit)? = null
@@ -149,7 +149,7 @@ private fun findSuitableParent(startView: View?): ViewGroup {
     var view = startView
     var fallback: ViewGroup? = null
     do {
-        if (view is CoordinatorLayout) {
+        if (view is androidx.coordinatorlayout.widget.CoordinatorLayout) {
             // We've found a CoordinatorLayout, use it
             return view
         } else if (view is FrameLayout && view !is NestedScrollView) {
