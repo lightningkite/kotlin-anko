@@ -12,11 +12,6 @@ import java.util.*
  */
 
 
-var TextView.textColorResource: Int
-    get() = throw IllegalAccessException()
-    set(value) {
-        setTextColor(resources.getColor(value))
-    }
 var TextView.hintTextColorResource: Int
     get() = throw IllegalAccessException()
     set(value) {

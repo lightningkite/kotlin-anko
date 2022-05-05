@@ -46,17 +46,19 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    api 'org.jetbrains.anko:anko-sdk15:0.9'
     api 'androidx.appcompat:appcompat:1.4.1'
-    api 'org.jetbrains.anko:anko-appcompat-v7:0.9'
     api 'androidx.cardview:cardview:1.0.0'
-    api 'org.jetbrains.anko:anko-cardview-v7:0.9'
     api 'androidx.gridlayout:gridlayout:1.0.0'
-    api 'org.jetbrains.anko:anko-gridlayout-v7:0.9'
     api 'androidx.recyclerview:recyclerview:1.2.1'
-    api 'org.jetbrains.anko:anko-recyclerview-v7:0.9'
     api 'com.google.android.material:material:1.5.0'
-    api 'org.jetbrains.anko:anko-design:0.9'
+
+    api "org.jetbrains.anko:anko-sdk21:$anko_version"
+    api "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    api "org.jetbrains.anko:anko-cardview-v7:$anko_version"
+    api "org.jetbrains.anko:anko-gridlayout-v7:$anko_version"
+    api "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
+    api "org.jetbrains.anko:anko-design:$anko_version"
+
     api project(path: ':kotlin-core')
 }
 
@@ -72,6 +74,7 @@ artifacts {
 
 buildscript {
     ext.kotlin_version = '1.6.21'
+    ext.anko_version = '0.10.8'
     repositories {
         mavenCentral()
     }

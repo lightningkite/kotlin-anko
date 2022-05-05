@@ -6,6 +6,7 @@ import android.widget.TextView
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.leftPadding
+import org.jetbrains.anko.textColorResource
 
 /**
  *
